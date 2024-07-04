@@ -82,12 +82,97 @@ resource "azurerm_kubernetes_cluster" "lz" {
       workload_runtime              = each.value.default_node_pool.workload_runtime
       zones                         = each.value.default_node_pool.zones
 
-      /*
-      dynamic "kubelet_config" {}
-      dynamic "linux_os_config" {}
-      dynamic "node_network_profile" {}
-      dynamic "upgrade_settings" {}
-*/
+      dynamic "kubelet_config" {
+        for_each = try(each.value.default_node_pool.kubelet_config, null) == null ? [] : [1]
+
+        content {
+          allowed_unsafe_sysctls    = each.value.default_node_pool.kubelet_config.allowed_unsafe_sysctls
+          container_log_max_line    = each.value.default_node_pool.kubelet_config.container_log_max_line
+          container_log_max_size_mb = each.value.default_node_pool.kubelet_config.container_log_max_size_mb
+          cpu_cfs_quota_enabled     = each.value.default_node_pool.kubelet_config.cpu_cfs_quota_enabled
+          cpu_cfs_quota_period      = each.value.default_node_pool.kubelet_config.cpu_cfs_quota_period
+          cpu_manager_policy        = each.value.default_node_pool.kubelet_config.cpu_manager_policy
+          image_gc_high_threshold   = each.value.default_node_pool.kubelet_config.image_gc_high_threshold
+          image_gc_low_threshold    = each.value.default_node_pool.kubelet_config.image_gc_low_threshold
+          pod_max_pid               = each.value.default_node_pool.kubelet_config.pod_max_pid
+          topology_manager_policy   = each.value.default_node_pool.kubelet_config.topology_manager_policy
+        }
+      }
+
+      dynamic "linux_os_config" {
+        for_each = try(each.value.default_node_pool.linux_os_config, null) == null ? [] : [1]
+
+        content {
+          swap_file_size_mb             = each.value.default_node_pool.linux_os_config.swap_file_size_mb
+          transparent_huge_page_defrag  = each.value.default_node_pool.linux_os_config.transparent_huge_page_defrag
+          transparent_huge_page_enabled = each.value.default_node_pool.linux_os_config.transparent_huge_page_enabled
+
+          dynamic "sysctl_config" {
+            for_each = try(each.value.default_node_pool.linux_os_config.sysctl_config, null) == null ? [] : [1]
+
+            content {
+              fs_aio_max_nr                      = each.value.default_node_pool.linux_os_config.sysctl_config.fs_aio_max_nr
+              fs_file_max                        = each.value.default_node_pool.linux_os_config.sysctl_config.fs_file_max
+              fs_inotify_max_user_watches        = each.value.default_node_pool.linux_os_config.sysctl_config.fs_inotify_max_user_watches
+              fs_nr_open                         = each.value.default_node_pool.linux_os_config.sysctl_config.fs_nr_open
+              kernel_threads_max                 = each.value.default_node_pool.linux_os_config.sysctl_config.kernel_threads_max
+              net_core_netdev_max_backlog        = each.value.default_node_pool.linux_os_config.sysctl_config.net_core_netdev_max_backlog
+              net_core_optmem_max                = each.value.default_node_pool.linux_os_config.sysctl_config.net_core_optmem_max
+              net_core_rmem_default              = each.value.default_node_pool.linux_os_config.sysctl_config.net_core_rmem_default
+              net_core_rmem_max                  = each.value.default_node_pool.linux_os_config.sysctl_config.net_core_rmem_max
+              net_core_somaxconn                 = each.value.default_node_pool.linux_os_config.sysctl_config.net_core_somaxconn
+              net_core_wmem_default              = each.value.default_node_pool.linux_os_config.sysctl_config.net_core_wmem_default
+              net_core_wmem_max                  = each.value.default_node_pool.linux_os_config.sysctl_config.net_core_wmem_max
+              net_ipv4_ip_local_port_range_max   = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_ip_local_port_range_max
+              net_ipv4_ip_local_port_range_min   = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_ip_local_port_range_min
+              net_ipv4_neigh_default_gc_thresh1  = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_neigh_default_gc_thresh1
+              net_ipv4_neigh_default_gc_thresh2  = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_neigh_default_gc_thresh2
+              net_ipv4_neigh_default_gc_thresh3  = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_neigh_default_gc_thresh3
+              net_ipv4_tcp_fin_timeout           = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_tcp_fin_timeout
+              net_ipv4_tcp_keepalive_intvl       = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_tcp_keepalive_intvl
+              net_ipv4_tcp_keepalive_probes      = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_tcp_keepalive_probes
+              net_ipv4_tcp_keepalive_time        = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_tcp_keepalive_time
+              net_ipv4_tcp_max_syn_backlog       = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_tcp_max_syn_backlog
+              net_ipv4_tcp_max_tw_buckets        = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_tcp_max_tw_buckets
+              net_ipv4_tcp_tw_reuse              = each.value.default_node_pool.linux_os_config.sysctl_config.net_ipv4_tcp_tw_reuse
+              net_netfilter_nf_conntrack_buckets = each.value.default_node_pool.linux_os_config.sysctl_config.net_netfilter_nf_conntrack_buckets
+              net_netfilter_nf_conntrack_max     = each.value.default_node_pool.linux_os_config.sysctl_config.net_netfilter_nf_conntrack_max
+              vm_max_map_count                   = each.value.default_node_pool.linux_os_config.sysctl_config.vm_max_map_count
+              vm_swappiness                      = each.value.default_node_pool.linux_os_config.sysctl_config.vm_swappiness
+              vm_vfs_cache_pressure              = each.value.default_node_pool.linux_os_config.sysctl_config.vm_vfs_cache_pressure
+            }
+          }
+        }
+      }
+
+      dynamic "node_network_profile" {
+        for_each = try(each.value.default_node_pool.node_network_profile, null) == null ? [] : [1]
+
+        content {
+          application_security_group_ids = each.value.default_node_pool.node_network_profile.application_security_group_ids
+          node_public_ip_tags            = each.value.default_node_pool.node_network_profile.node_public_ip_tags
+
+          dynamic "allowed_host_ports" {
+            for_each = coalesce(each.value.default_node_pool.node_network_profile.allowed_host_ports, [])
+
+            content {
+              port_start = allowed_host_ports.value.port_start
+              port_end   = allowed_host_ports.value.port_end
+              protocol   = allowed_host_ports.value.protocol
+            }
+          }
+        }
+      }
+
+      dynamic "upgrade_settings" {
+        for_each = try(each.value.default_node_pool.upgrade_settings, null) == null ? [] : [1]
+
+        content {
+          drain_timeout_in_minutes      = each.value.default_node_pool.upgrade_settings.drain_timeout_in_minutes
+          node_soak_duration_in_minutes = each.value.default_node_pool.upgrade_settings.node_soak_duration_in_minutes
+          max_surge                     = each.value.default_node_pool.upgrade_settings.max_surge
+        }
+      }
     }
   }
 
@@ -144,7 +229,6 @@ resource "azurerm_kubernetes_cluster" "lz" {
     }
   }
 
-  /*
   dynamic "confidential_computing" {
     for_each = try(each.value.confidential_computing, null) == null ? [] : [1]
 
@@ -157,9 +241,12 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.http_proxy_config, null) == null ? [] : [1]
 
     content {
+      http_proxy  = each.value.http_proxy_config.http_proxy
+      https_proxy = each.value.http_proxy_config.https_proxy
+      no_proxy    = each.value.http_proxy_config.no_proxy
+      trusted_ca  = each.value.http_proxy_config.trusted_ca
     }
   }
-  */
 
   dynamic "identity" {
     for_each = try(each.value.identity, null) == null ? [] : [1]
@@ -170,23 +257,31 @@ resource "azurerm_kubernetes_cluster" "lz" {
     }
   }
 
-  /*
   dynamic "ingress_application_gateway" {
     for_each = try(each.value.ingress_application_gateway, null) == null ? [] : [1]
 
     content {
+      gateway_id   = each.value.ingress_application_gateway.gateway_id
+      gateway_name = each.value.ingress_application_gateway.gateway_name
+      subnet_cidr  = each.value.ingress_application_gateway.subnet_cidr
+      subnet_id    = each.value.ingress_application_gateway.subnet_id
     }
   }
+
   dynamic "key_management_service" {
     for_each = try(each.value.key_management_service, null) == null ? [] : [1]
 
     content {
+      key_vault_key_id         = each.value.key_management_service.key_vault_key_id
+      key_vault_network_access = each.value.key_management_service.key_vault_network_access
     }
   }
   dynamic "key_vault_secrets_provider" {
     for_each = try(each.value.key_vault_secrets_provider, null) == null ? [] : [1]
 
     content {
+      secret_rotation_enabled  = each.value.key_vault_secrets_provider.secret_rotation_enabled
+      secret_rotation_interval = each.value.key_vault_secrets_provider.secret_rotation_interval
     }
   }
 
@@ -194,6 +289,9 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.kubelet_identity, null) == null ? [] : [1]
 
     content {
+      client_id                 = each.value.kubelet_identity.client_id
+      object_id                 = each.value.kubelet_identity.object_id
+      user_assigned_identity_id = each.value.kubelet_identity.user_assigned_identity_id
     }
   }
 
@@ -201,6 +299,15 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.linux_profile, null) == null ? [] : [1]
 
     content {
+      admin_username = each.value.linux_profile.admin_username
+
+      dynamic "ssh_key" {
+        for_each = coalesce(each.value.linux_profile.ssh_key, [])
+
+        content {
+          key_data = ssh_key.value.key_data
+        }
+      }
     }
   }
 
@@ -208,6 +315,23 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.maintenance_window, null) == null ? [] : [1]
 
     content {
+      dynamic "allowed" {
+        for_each = coalesce(each.value.maintenance_window.allowed, [])
+
+        content {
+          day   = allowed.value.day
+          hours = allowed.value.hours
+        }
+      }
+
+      dynamic "not_allowed" {
+        for_each = coalesce(each.value.maintenance_window.not_allowed, [])
+
+        content {
+          start = not_allowed.value.start
+          end   = not_allowed.value.end
+        }
+      }
     }
   }
 
@@ -215,6 +339,24 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.maintenance_window_auto_upgrade, null) == null ? [] : [1]
 
     content {
+      frequency    = each.value.maintenance_window_auto_upgrade.frequency
+      interval     = each.value.maintenance_window_auto_upgrade.interval
+      duration     = each.value.maintenance_window_auto_upgrade.duration
+      day_of_week  = each.value.maintenance_window_auto_upgrade.day_of_week
+      day_of_month = each.value.maintenance_window_auto_upgrade.day_of_month
+      week_index   = each.value.maintenance_window_auto_upgrade.week_index
+      start_time   = each.value.maintenance_window_auto_upgrade.start_time
+      utc_offset   = each.value.maintenance_window_auto_upgrade.utc_offset
+      start_date   = each.value.maintenance_window_auto_upgrade.start_date
+
+      dynamic "not_allowed" {
+        for_each = coalesce(each.value.maintenance_window_auto_upgrade.not_allowed, [])
+
+        content {
+          start = not_allowed.value.start
+          end   = not_allowed.value.end
+        }
+      }
     }
   }
 
@@ -222,6 +364,24 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.maintenance_window_node_os, null) == null ? [] : [1]
 
     content {
+      frequency    = each.value.maintenance_window_node_os.frequency
+      interval     = each.value.maintenance_window_node_os.interval
+      duration     = each.value.maintenance_window_node_os.duration
+      day_of_week  = each.value.maintenance_window_node_os.day_of_week
+      day_of_month = each.value.maintenance_window_node_os.day_of_month
+      week_index   = each.value.maintenance_window_node_os.week_index
+      start_time   = each.value.maintenance_window_node_os.start_time
+      utc_offset   = each.value.maintenance_window_node_os.utc_offset
+      start_date   = each.value.maintenance_window_node_os.start_date
+
+      dynamic "not_allowed" {
+        for_each = coalesce(each.value.maintenance_window_node_os.not_allowed, [])
+
+        content {
+          start = not_allowed.value.start
+          end   = not_allowed.value.end
+        }
+      }
     }
   }
 
@@ -229,6 +389,7 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.microsoft_defender, null) == null ? [] : [1]
 
     content {
+      log_analytics_workspace_id = each.value.microsoft_defender.log_analytics_workspace_id
     }
   }
 
@@ -245,6 +406,41 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.network_profile, null) == null ? [] : [1]
 
     content {
+      network_plugin      = each.value.network_profile.network_plugin
+      network_mode        = each.value.network_profile.network_mode
+      network_policy      = each.value.network_profile.network_policy
+      dns_service_ip      = each.value.network_profile.dns_service_ip
+      network_data_plane  = each.value.network_profile.network_data_plane
+      network_plugin_mode = each.value.network_profile.network_plugin_mode
+      outbound_type       = each.value.network_profile.outbound_type
+      pod_cidr            = each.value.network_profile.pod_cidr
+      pod_cidrs           = each.value.network_profile.pod_cidrs
+      service_cidr        = each.value.network_profile.service_cidr
+      service_cidrs       = each.value.network_profile.service_cidrs
+      ip_versions         = each.value.network_profile.ip_versions
+      load_balancer_sku   = each.value.network_profile.load_balancer_sku
+
+      dynamic "load_balancer_profile" {
+        for_each = try(each.value.network_profile.load_balancer_profile, null) == null ? [] : [1]
+
+        content {
+          idle_timeout_in_minutes     = each.value.network_profile.load_balancer_profile.idle_timeout_in_minutes
+          managed_outbound_ip_count   = each.value.network_profile.load_balancer_profile.managed_outbound_ip_count
+          managed_outbound_ipv6_count = each.value.network_profile.load_balancer_profile.managed_outbound_ipv6_count
+          outbound_ip_address_ids     = each.value.network_profile.load_balancer_profile.outbound_ip_address_ids
+          outbound_ip_prefix_ids      = each.value.network_profile.load_balancer_profile.outbound_ip_prefix_ids
+          outbound_ports_allocated    = each.value.network_profile.load_balancer_profile.outbound_ports_allocated
+        }
+      }
+
+      dynamic "nat_gateway_profile" {
+        for_each = try(each.value.network_profile.nat_gateway_profile, null) == null ? [] : [1]
+
+        content {
+          idle_timeout_in_minutes   = each.value.network_profile.nat_gateway_profile.idle_timeout_in_minutes
+          managed_outbound_ip_count = each.value.network_profile.nat_gateway_profile.managed_outbound_ip_count
+        }
+      }
     }
   }
 
@@ -252,6 +448,8 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.oms_agent, null) == null ? [] : [1]
 
     content {
+      log_analytics_workspace_id      = each.value.oms_agent.log_analytics_workspace_id
+      msi_auth_for_monitoring_enabled = each.value.oms_agent.msi_auth_for_monitoring_enabled
     }
   }
 
@@ -259,6 +457,9 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.service_mesh_profile, null) == null ? [] : [1]
 
     content {
+      mode                             = each.value.service_mesh_profile.mode
+      internal_ingress_gateway_enabled = each.value.service_mesh_profile.internal_ingress_gateway_enabled
+      external_ingress_gateway_enabled = each.value.service_mesh_profile.external_ingress_gateway_enabled
     }
   }
 
@@ -266,6 +467,9 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.workload_autoscaler_profile, null) == null ? [] : [1]
 
     content {
+      keda_enabled                    = each.value.workload_autoscaler_profile.keda_enabled
+      vertical_pod_autoscaler_enabled = each.value.workload_autoscaler_profile.vertical_pod_autoscaler_enabled
+
     }
   }
 
@@ -273,6 +477,8 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.service_principal, null) == null ? [] : [1]
 
     content {
+      client_id     = each.value.service_principal.client_id
+      client_secret = each.value.service_principal.client_secret
     }
   }
 
@@ -280,6 +486,11 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.storage_profile, null) == null ? [] : [1]
 
     content {
+      blob_driver_enabled         = each.value.storage_profile.blob_driver_enabled
+      disk_driver_enabled         = each.value.storage_profile.disk_driver_enabled
+      disk_driver_version         = each.value.storage_profile.disk_driver_version
+      file_driver_enabled         = each.value.storage_profile.file_driver_enabled
+      snapshot_controller_enabled = each.value.storage_profile.snapshot_controller_enabled
     }
   }
 
@@ -287,6 +498,7 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.web_app_routing, null) == null ? [] : [1]
 
     content {
+      dns_zone_ids = each.value.web_app_routing.dns_zone_ids
     }
   }
 
@@ -294,7 +506,18 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.windows_profile, null) == null ? [] : [1]
 
     content {
+      admin_username = each.value.windows_profile.admin_username
+      admin_password = each.value.windows_profile.admin_password
+      license        = each.value.windows_profile.license
+
+      dynamic "gmsa" {
+        for_each = try(each.value.windows_profile.gmsa, null) == null ? [] : [1]
+
+        content {
+          dns_server  = each.value.windows_profile.gmsa.dns_server
+          root_domain = each.value.windows_profile.gmsa.root_domain
+        }
+      }
     }
   }
-*/
 }
