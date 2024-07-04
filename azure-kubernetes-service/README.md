@@ -1,0 +1,44 @@
+<!-- BEGIN_TF_DOCS -->
+
+Azure Kubernetes Service
+
+## Requirements
+
+No requirements.
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [azurerm_container_registry.lz](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry) | resource |
+| [azurerm_container_registry_agent_pool.lz](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_agent_pool) | resource |
+| [azurerm_management_lock.container_registry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_lock) | resource |
+| [azurerm_monitor_diagnostic_setting.container_registry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) | resource |
+| [azurerm_private_endpoint.container_registry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) | resource |
+| [azurerm_role_assignment.container_registry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_common"></a> [common](#input\_common) | Common Azure resource parameters | <pre>object({<br>    tags            = optional(map(string))<br>    custom_metadata = optional(map(string))<br>  })</pre> | `{}` | no |
+| <a name="input_container_registry"></a> [container\_registry](#input\_container\_registry) | Azure Container Registry | <pre>object({<br>    registry = optional(map(object({<br>      name                = string<br>      resource_group_name = string<br>      location            = string<br>      custom_metadata     = optional(map(string))<br>      management_lock = optional(object({<br>        name       = optional(string)<br>        lock_level = optional(string, "CanNotDelete")<br>        notes      = optional(string)<br>      }))<br>      tags                          = optional(map(string))<br>      sku                           = string<br>      admin_enabled                 = optional(bool)<br>      public_network_access_enabled = optional(bool)<br>      quarantine_policy_enabled     = optional(bool)<br>      zone_redundancy_enabled       = optional(bool)<br>      export_policy_enabled         = optional(bool)<br>      anonymous_pull_enabled        = optional(bool)<br>      data_endpoint_enabled         = optional(bool)<br>      network_rule_bypass_option    = optional(string)<br>      georeplications = optional(object({<br>        location                  = string<br>        regional_endpoint_enabled = optional(bool)<br>        zone_redundancy_enabled   = optional(bool)<br>        tags                      = optional(map(string))<br>      }))<br>      network_rule_set = optional(object({<br>        default_action = optional(string)<br>        ip_rule = optional(list(object({<br>          action   = string<br>          ip_range = string<br><br>        })))<br>      }))<br>      retention_policy = optional(object({<br>        days    = optional(number)<br>        enabled = optional(bool)<br>      }))<br>      trust_policy = optional(object({<br>        enabled = optional(bool)<br>      }))<br>      identity = optional(object({<br>        type         = string<br>        identity_ids = optional(list(string))<br>      }))<br>      encryption = optional(object({<br>        key_vault_key_id   = string<br>        identity_client_id = string<br>      }))<br>      diagnostic_setting = optional(object({<br>        name                           = optional(string)<br>        custom_metadata                = optional(map(string))<br>        eventhub_name                  = optional(string)<br>        eventhub_authorization_rule_id = optional(string)<br>        log_analytics_workspace_id     = optional(string)<br>        storage_account_id             = optional(string)<br>        log_analytics_destination_type = optional(string)<br>        partner_solution_id            = optional(string)<br>        enabled_log = optional(list(object({<br>          category       = optional(string)<br>          category_group = optional(string)<br>          retention_policy = optional(object({<br>            days    = optional(number)<br>            enabled = optional(bool)<br>          }))<br>        })))<br>        metric = optional(list(object({<br>          category = string<br>          enabled  = optional(bool)<br>          retention_policy = optional(object({<br>            days    = optional(number)<br>            enabled = optional(bool)<br>          }))<br>        })))<br>      }))<br>      private_endpoint = optional(list(object({<br>        # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint<br>        name                          = string<br>        custom_metadata               = optional(map(string))<br>        resource_group_name           = optional(string)<br>        location                      = optional(string)<br>        subnet_id                     = optional(string)<br>        custom_network_interface_name = optional(string)<br>        tags                          = optional(map(string))<br>        private_dns_zone_group = optional(object({<br>          name                 = string<br>          custom_metadata      = optional(map(string))<br>          private_dns_zone_ids = list(string)<br>        }))<br>        private_service_connection = optional(object({<br>          name                              = string<br>          custom_metadata                   = optional(map(string))<br>          is_manual_connection              = bool<br>          private_connection_resource_id    = optional(string)<br>          private_connection_resource_alias = optional(string)<br>          subresource_names                 = optional(list(string))<br>          request_message                   = optional(string)<br>        }))<br>        ip_configuration = optional(list(object({<br>          name               = string<br>          custom_metadata    = optional(map(string))<br>          private_ip_address = string<br>          subresource_name   = optional(string)<br>          member_name        = optional(string)<br>        })))<br>      })))<br>      iam = optional(list(object({<br>        name                                   = optional(string)<br>        role_definition_name                   = optional(string)<br>        role_definition_id                     = optional(string)<br>        principal_type                         = optional(string)<br>        scope                                  = optional(string)<br>        principal_id                           = list(string)<br>        condition                              = optional(string)<br>        condition_version                      = optional(string)<br>        delegated_managed_identity_resource_id = optional(string)<br>        description                            = optional(string)<br>        skip_service_principal_aad_check       = optional(bool)<br>      })))<br>      agent_pool = optional(map(object({<br>        container_registry_name   = optional(string)<br>        name                      = string<br>        resource_group_name       = string<br>        location                  = string<br>        tags                      = optional(map(string))<br>        instance_count            = optional(number)<br>        tier                      = optional(string)<br>        virtual_network_subnet_id = optional(string)<br>      })))<br>    })))<br>  })</pre> | `{}` | no |
+| <a name="input_entra_id"></a> [entra\_id](#input\_entra\_id) | Entra ID configuration | <pre>object({<br>    alias = optional(map(string), {})<br>  })</pre> | <pre>{<br>  "alias": {}<br>}</pre> | no |
+| <a name="input_reference"></a> [reference](#input\_reference) | Azure Resource references | <pre>object({<br>    azure_subnet                  = optional(map(any))<br>    azure_log_analytics_workspace = optional(map(any))<br>    azure_storage_account         = optional(map(any))<br>    azure_private_dns_zone        = optional(map(any))<br>    azure_resource_group          = optional(map(any))<br>    azure_role_definition         = optional(map(any))<br>    azure_resource_principal_id   = optional(map(any))<br>  })</pre> | `{}` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_azure_container_registry"></a> [azure\_container\_registry](#output\_azure\_container\_registry) | Azure Container Registries |
+<!-- END_TF_DOCS -->
