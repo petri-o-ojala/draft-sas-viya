@@ -1,7 +1,7 @@
-data.azurerm_subscription.customer: Reading...
 data.azurerm_client_config.customer: Reading...
 data.azurerm_client_config.customer: Read complete after 0s [id=Y2xpZW50Q29uZmlncy9jbGllbnRJZD0wNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDY7b2JqZWN0SWQ9NjEwYWQyMmYtODI5NC00OGZiLThlODUtYzkxMTgxYzIwYjY3O3N1YnNjcmlwdGlvbklkPWI2ZjIyMGQ2LTQ3M2ItNGY4YS1hOGQ1LWJiZmRmNjUyYTBkZjt0ZW5hbnRJZD0zZjU5NzM1MC1mMmZmLTQ2MzAtYjBhOC1lYTkxY2FmYWVmMzc=]
-data.azurerm_subscription.customer: Read complete after 0s [id=/subscriptions/b6f220d6-473b-4f8a-a8d5-bbfdf652a0df]
+data.azurerm_subscription.customer: Reading...
+data.azurerm_subscription.customer: Read complete after 1s [id=/subscriptions/b6f220d6-473b-4f8a-a8d5-bbfdf652a0df]
 
 OpenTofu used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
@@ -439,6 +439,28 @@ OpenTofu will perform the following actions:
         }
     }
 
+  # module.sas_viya_postgresql.azurerm_postgresql_flexible_server.lz["sas-viya"] will be created
+  + resource "azurerm_postgresql_flexible_server" "lz" {
+      + administrator_login           = "psqladmin"
+      + administrator_password        = (sensitive value)
+      + auto_grow_enabled             = false
+      + backup_retention_days         = (known after apply)
+      + delegated_subnet_id           = "/subscriptions/b6f220d6-473b-4f8a-a8d5-bbfdf652a0df/resourceGroups/rg-ismok-bicep-dev/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/subnet1"
+      + fqdn                          = (known after apply)
+      + geo_redundant_backup_enabled  = false
+      + id                            = (known after apply)
+      + location                      = "westeurope"
+      + name                          = "psql-spankki-afc-esp-we-sas-dev"
+      + private_dns_zone_id           = (known after apply)
+      + public_network_access_enabled = false
+      + resource_group_name           = "rg-spankki-afc-esp-we-postgresql-dev"
+      + sku_name                      = "GP_Standard_D4s_v3"
+      + storage_mb                    = 32768
+      + storage_tier                  = "P30"
+      + version                       = "12"
+      + zone                          = "1"
+    }
+
   # module.sas_viya_resource_group.azurerm_resource_group.lz["sas-viya-acr"] will be created
   + resource "azurerm_resource_group" "lz" {
       + id       = (known after apply)
@@ -540,7 +562,7 @@ OpenTofu will perform the following actions:
       + send                              = true
     }
 
-Plan: 25 to add, 0 to change, 0 to destroy.
+Plan: 26 to add, 0 to change, 0 to destroy.
 
 ─────────────────────────────────────────────────────────────────────────────
 
