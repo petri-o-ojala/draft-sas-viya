@@ -73,6 +73,16 @@ variable "sas_viya_acr" {
 }
 
 #
+# Azure PostgreSQL
+#
+
+variable "sas_viya_postgresql" {
+  description = "SAS Viya Azure PostgreSQL"
+  type        = any
+  default     = {}
+}
+
+#
 # Azure Serviec Bus
 #
 
