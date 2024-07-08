@@ -1,21 +1,9 @@
 #
-# SAS ESP AKS Cluster
+# SAS ESP Azure Files NFS service
 #
 
-module "sas_esp_aks_identity" {
-  source = "./azure-authorization"
-
-  reference = {
-    azure_resource_group = module.sas_esp_resource_group.azure_resource_group
-  }
-
-  common   = var.sas_esp_common
-  identity = var.sas_esp_aks_identity
-}
-
-
-module "sas_esp_aks" {
-  source = "./azure-kubernetes-service"
+module "sas_esp_azure_files_nfs" {
+  source = "./azure-storage"
 
   reference = {
     azure_resource_group          = module.sas_esp_resource_group.azure_resource_group
@@ -24,11 +12,11 @@ module "sas_esp_aks" {
     azure_log_analytics_workspace = module.sas_esp_log_analytics.azure_log_analytics_workspace
   }
 
-  common = var.sas_esp_common
-  aks    = var.sas_esp_aks
+  common  = var.sas_esp_common
+  storage = var.sas_esp_azure_files_nfs
 }
 
-module "sas_esp_aks_private_endpoint" {
+module "sas_esp_azure_files_nfs_private_endpoint" {
   source = "./azure-network"
 
   reference = {
@@ -37,11 +25,11 @@ module "sas_esp_aks_private_endpoint" {
     azure_subnet           = module.sas_esp_network.azure_subnet
     azure_resource_id = merge(
       {
-        for resource_id, resource in module.sas_esp_aks.azure_kubernetes_cluster : "aks-cluster-${resource_id}" => resource.id
+        for resource_id, resource in module.sas_esp_azure_files_nfs.azure_storage_account : "storage-account-${resource_id}" => resource.id
       }
     )
   }
 
   common  = var.sas_esp_common
-  network = var.sas_esp_aks_private_endpoint
+  network = var.sas_esp_azure_files_nfs_private_endpoint
 }

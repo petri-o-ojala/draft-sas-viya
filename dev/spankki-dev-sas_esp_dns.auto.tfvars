@@ -26,6 +26,19 @@ sas_esp_dns = {
         "managed_by"  = "tietoevry"
       }
     },
+    "privatelink-file" = {
+      name                = "privatelink.file.core.windows.net"
+      resource_group_name = "rg-networking"
+      tags = {
+        "application" = "AFC"
+        "contact"     = "anssi.yli-leppala@s-pankki.fi"
+        "costcenter"  = "3730403"
+        "department"  = "S-Pankki"
+        "environment" = "dev"
+        "terraform"   = "true"
+        "managed_by"  = "tietoevry"
+      }
+    },
     "privatelink-postgresql" = {
       name                = "privatelink.postgres.database.azure.com"
       resource_group_name = "rg-networking"
@@ -71,6 +84,22 @@ sas_esp_dns = {
     "privatelink-blob" = {
       name                  = "sas-esp"
       private_dns_zone_name = "privatelink-blob"
+      virtual_network_id    = "sas-esp-dev"
+      resource_group_name   = "rg-networking"
+      registration_enabled  = false
+      tags = {
+        "application" = "AFC"
+        "contact"     = "anssi.yli-leppala@s-pankki.fi"
+        "costcenter"  = "3730403"
+        "department"  = "S-Pankki"
+        "environment" = "dev"
+        "terraform"   = "true"
+        "managed_by"  = "tietoevry"
+      }
+    }
+    "privatelink-file" = {
+      name                  = "sas-esp"
+      private_dns_zone_name = "privatelink-file"
       virtual_network_id    = "sas-esp-dev"
       resource_group_name   = "rg-networking"
       registration_enabled  = false

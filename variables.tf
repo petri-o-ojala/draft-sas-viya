@@ -125,3 +125,19 @@ variable "sas_esp_anf" {
   type        = any
   default     = {}
 }
+
+#
+# Azure Files NFS
+#
+
+variable "sas_esp_azure_files_nfs" {
+  description = "SAS ESP Azure Files NFS"
+  type        = any
+  default     = {}
+}
+
+variable "sas_esp_azure_files_nfs_private_endpoint" {
+  description = "SAS ESP Azure Files NFS Private Endpoint"
+  type        = any
+  default     = {}
+}

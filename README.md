@@ -6,6 +6,24 @@ Manually allowed access from `88.114.194.49` to the storage account temporarily.
 
 Azure NetApp Files provider has been enabled on the Azure subscription (`az provider register --namespace Microsoft.NetApp`).
 
+# Supported Azure serviecs
+
+- Resource Groups
+- User-managed Identities
+- Azure Vnets and Subnets
+- Azure Network Security Groups and rules
+- Azure Log Analytics Workspace
+- Azure DNS
+- Privatelink and private endpoints
+- Azure Container Registry
+- Azure Service Bus
+- Azure Database for PostgreSQL (Flexible)
+- Azure NetApp Files
+- Azure Files NFS
+- Azure Kubernetes Service
+
+The terraform modules used may support other resources as well within the Azure service context.
+
 # Deployment components
 
 ## Resource Groups
@@ -53,6 +71,10 @@ PostgreSQL Flexible configuration and deployment tested, not enabled as not enab
 
 Azure NetApp Files configuration and deployment has been tested with ANF Account, Pool, Volume and Quota rule (unlikely to be needed).  To be deployed properly when the details and requirements have been set.
 
+## Azure Files NFS
+
+Azure Files NFS share configuration and deployment has been tested with private endpoint and private DNS zone.
+
 ## Azure Kubernetes Service
 
 Azure Kubernetes Service configuration and deployment has been tested with five node pools (default, cas, compute, stateless and stateful).  AKS cluster has been configured as private cluster and node pools with auto scaling (except for default).  `SystemAssigned` identity is being used as there are currently not enough permissions to use UserAssigned identity for AKS, it requires IAM role assignments to the network resource group (or resources inside it).
@@ -61,7 +83,6 @@ Azure Kubernetes Service configuration and deployment has been tested with five 
 
 The following modules to be included:
 
-- Support for Azure Files
 - Support for Azure Virtual Machines
 - Add Diagnostic Settings
 
