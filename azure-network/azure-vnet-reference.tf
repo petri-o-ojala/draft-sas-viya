@@ -14,6 +14,7 @@ variable "reference" {
     azure_private_dns_zone        = optional(map(any))
     azure_role_definition         = optional(map(any))
     azure_resource_principal_id   = optional(map(any))
+    azure_resource_id             = optional(map(any))
   })
   default = {}
 }
@@ -27,4 +28,5 @@ locals {
   azure_private_dns_zone        = coalesce(var.reference.azure_private_dns_zone, {})
   azure_role_definition         = coalesce(var.reference.azure_role_definition, {})
   azure_resource_principal_id   = coalesce(var.reference.azure_resource_principal_id, {})
+  azure_resource_id             = coalesce(var.reference.azure_resource_id, {})
 }

@@ -52,6 +52,17 @@ variable "database" {
         start_hour   = optional(number)
         start_minute = optional(number)
       }))
+      configuration = optional(list(object({
+        # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server_configuration
+        name  = string
+        value = string
+      })))
+      firewall_rule = optional(list(object({
+        # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server_firewall_rule
+        name             = string
+        start_ip_address = string
+        end_ip_address   = string
+      })))
     })))
     mssql_virtual_machine = optional(map(object({
       virtual_machine_id               = string
@@ -337,5 +348,29 @@ locals {
         resource_index = join("_", [postgresql_id])
       }
     )
+  ])
+
+  azure_postgresql_flexible_server_configuration = flatten([
+    for postgresql_id, postgresql in coalesce(try(var.database.postgresql_flexible, null), {}) : [
+      for configuration in coalesce(postgresql.configuration, []) : merge(
+        configuration,
+        {
+          server_id      = azurerm_postgresql_flexible_server.lz[postgresql_id].id
+          resource_index = join("_", [postgresql_id, configuration.name])
+        }
+      )
+    ]
+  ])
+
+  azure_postgresql_flexible_server_firewall_rule = flatten([
+    for postgresql_id, postgresql in coalesce(try(var.database.postgresql_flexible, null), {}) : [
+      for rule in coalesce(postgresql.firewall_rule, []) : merge(
+        rule,
+        {
+          server_id      = azurerm_postgresql_flexible_server.lz[postgresql_id].id
+          resource_index = join("_", [postgresql_id, rule.name])
+        }
+      )
+    ]
   ])
 }

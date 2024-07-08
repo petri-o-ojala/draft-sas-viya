@@ -37,10 +37,9 @@ resource "azurerm_kubernetes_cluster" "lz" {
   oidc_issuer_enabled                 = each.value.oidc_issuer_enabled
   open_service_mesh_enabled           = each.value.open_service_mesh_enabled
   private_cluster_enabled             = each.value.private_cluster_enabled
-  private_dns_zone_id                 = each.value.private_dns_zone_id
+  private_dns_zone_id                 = each.value.private_dns_zone_id == null ? null : lookup(local.azure_private_dns_zone, each.value.private_dns_zone_id, null) == null ? each.value.private_dns_zone_id : local.azure_private_dns_zone[each.value.private_dns_zone_id].id
   private_cluster_public_fqdn_enabled = each.value.private_cluster_public_fqdn_enabled
   workload_identity_enabled           = each.value.workload_identity_enabled
-  public_network_access_enabled       = each.value.public_network_access_enabled
   role_based_access_control_enabled   = each.value.role_based_access_control_enabled
   run_command_enabled                 = each.value.run_command_enabled
   sku_tier                            = each.value.sku_tier
@@ -55,6 +54,9 @@ resource "azurerm_kubernetes_cluster" "lz" {
       capacity_reservation_group_id = each.value.default_node_pool.capacity_reservation_group_id
       custom_ca_trust_enabled       = each.value.default_node_pool.custom_ca_trust_enabled
       enable_auto_scaling           = each.value.default_node_pool.enable_auto_scaling
+      max_count                     = each.value.default_node_pool.max_count
+      min_count                     = each.value.default_node_pool.min_count
+      node_count                    = each.value.default_node_pool.node_count
       enable_host_encryption        = each.value.default_node_pool.enable_host_encryption
       enable_node_public_ip         = each.value.default_node_pool.enable_node_public_ip
       gpu_instance                  = each.value.default_node_pool.gpu_instance
@@ -70,7 +72,7 @@ resource "azurerm_kubernetes_cluster" "lz" {
       os_disk_size_gb               = each.value.default_node_pool.os_disk_size_gb
       os_disk_type                  = each.value.default_node_pool.os_disk_type
       os_sku                        = each.value.default_node_pool.os_sku
-      pod_subnet_id                 = each.value.default_node_pool.pod_subnet_id
+      pod_subnet_id                 = each.value.default_node_pool.pod_subnet_id == null ? null : lookup(local.azure_subnet, each.value.default_node_pool.pod_subnet_id, null) == null ? each.value.default_node_pool.pod_subnet_id : local.azure_subnet[each.value.default_node_pool.pod_subnet_id].id
       proximity_placement_group_id  = each.value.default_node_pool.proximity_placement_group_id
       scale_down_mode               = each.value.default_node_pool.scale_down_mode
       snapshot_id                   = each.value.default_node_pool.snapshot_id
@@ -78,7 +80,7 @@ resource "azurerm_kubernetes_cluster" "lz" {
       type                          = each.value.default_node_pool.type
       tags                          = each.value.default_node_pool.tags
       ultra_ssd_enabled             = each.value.default_node_pool.ultra_ssd_enabled
-      vnet_subnet_id                = each.value.default_node_pool.vnet_subnet_id
+      vnet_subnet_id                = each.value.default_node_pool.vnet_subnet_id == null ? null : lookup(local.azure_subnet, each.value.default_node_pool.vnet_subnet_id, null) == null ? each.value.default_node_pool.vnet_subnet_id : local.azure_subnet[each.value.default_node_pool.pod_subvnet_subnet_idnet_id].id
       workload_runtime              = each.value.default_node_pool.workload_runtime
       zones                         = each.value.default_node_pool.zones
 
@@ -189,7 +191,7 @@ resource "azurerm_kubernetes_cluster" "lz" {
 
     content {
       authorized_ip_ranges     = each.value.api_server_access_profile.authorized_ip_ranges
-      subnet_id                = each.value.api_server_access_profile.subnet_id
+      subnet_id                = each.value.api_server_access_profile.subnet_id == null ? null : lookup(local.azure_subnet, each.value.api_server_access_profile.subnet_id, null) == null ? each.value.api_server_access_profile.subnet_id : local.azure_subnet[each.value.api_server_access_profile.subnet_id].id
       vnet_integration_enabled = each.value.api_server_access_profile.vnet_integration_enabled
     }
   }
@@ -222,7 +224,6 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.azure_active_directory_role_based_access_control, null) == null ? [] : [1]
 
     content {
-      managed                = each.value.azure_active_directory_role_based_access_control.managed
       tenant_id              = each.value.azure_active_directory_role_based_access_control.tenant_id
       admin_group_object_ids = each.value.azure_active_directory_role_based_access_control.admin_group_object_ids
       azure_rbac_enabled     = each.value.azure_active_directory_role_based_access_control.azure_rbac_enabled
@@ -264,7 +265,7 @@ resource "azurerm_kubernetes_cluster" "lz" {
       gateway_id   = each.value.ingress_application_gateway.gateway_id
       gateway_name = each.value.ingress_application_gateway.gateway_name
       subnet_cidr  = each.value.ingress_application_gateway.subnet_cidr
-      subnet_id    = each.value.ingress_application_gateway.subnet_id
+      subnet_id    = each.value.ingress_application_gateway.subnet_id == null ? null : lookup(local.azure_subnet, each.value.ingress_application_gateway.subnet_id, null) == null ? each.value.ingress_application_gateway.subnet_id : local.azure_subnet[each.value.ingress_application_gateway.subnet_id].id
     }
   }
 
@@ -389,7 +390,7 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.microsoft_defender, null) == null ? [] : [1]
 
     content {
-      log_analytics_workspace_id = each.value.microsoft_defender.log_analytics_workspace_id
+      log_analytics_workspace_id = lookup(local.azure_log_analytics_workspace, each.value.microsoft_defender.log_analytics_workspace_id, null) == null ? each.value.microsoft_defender.log_analytics_workspace_id : local.azure_log_analytics_workspace[each.value.microsoft_defender.log_analytics_workspace_id].id
     }
   }
 
@@ -448,7 +449,7 @@ resource "azurerm_kubernetes_cluster" "lz" {
     for_each = try(each.value.oms_agent, null) == null ? [] : [1]
 
     content {
-      log_analytics_workspace_id      = each.value.oms_agent.log_analytics_workspace_id
+      log_analytics_workspace_id      = lookup(local.azure_log_analytics_workspace, each.value.oms_agent.log_analytics_workspace_id, null) == null ? each.value.oms_agent.log_analytics_workspace_id : local.azure_log_analytics_workspace[each.value.oms_agent.log_analytics_workspace_id].id
       msi_auth_for_monitoring_enabled = each.value.oms_agent.msi_auth_for_monitoring_enabled
     }
   }
@@ -519,5 +520,13 @@ resource "azurerm_kubernetes_cluster" "lz" {
         }
       }
     }
+  }
+
+  timeouts {
+    # Default for all resources
+    create = "90m"
+    update = "90m"
+    read   = "5m"
+    delete = "90m"
   }
 }

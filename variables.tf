@@ -1,9 +1,9 @@
 #
-# SAS Viya
+# SAS ESP
 #
 
-variable "sas_viya_common" {
-  description = "SAS Viya Common settings"
+variable "sas_esp_common" {
+  description = "SAS ESP Common settings"
   type        = any
   default     = {}
 }
@@ -18,8 +18,14 @@ variable "spankki_entra_id" {
 # Common infrastructure
 #
 
-variable "sas_viya_resource_group" {
-  description = "SAS Viya Resource Groups"
+variable "sas_esp_resource_group" {
+  description = "SAS ESP Resource Groups"
+  type        = any
+  default     = {}
+}
+
+variable "sas_esp_log_analytics" {
+  description = "SAS ESP Log Analytics Workspaces"
   type        = any
   default     = {}
 }
@@ -28,26 +34,26 @@ variable "sas_viya_resource_group" {
 # Azure Networking
 #
 
-variable "sas_viya_network" {
-  description = "SAS Viya VNet Network"
+variable "sas_esp_network" {
+  description = "SAS ESP VNet Network"
   type        = any
   default     = {}
 }
 
-variable "sas_viya_network_private_endpoint" {
-  description = "SAS Viya Private Endpoints"
+variable "sas_esp_network_private_endpoint" {
+  description = "SAS ESP Private Endpoints"
   type        = any
   default     = {}
 }
 
-variable "sas_viya_network_security_group" {
-  description = "SAS Viya Network Security Groups"
+variable "sas_esp_network_security_group" {
+  description = "SAS ESP Network Security Groups"
   type        = any
   default     = {}
 }
 
-variable "sas_viya_dns" {
-  description = "SAS Viya DNS Zones"
+variable "sas_esp_dns" {
+  description = "SAS ESP DNS Zones"
   type        = any
   default     = {}
 }
@@ -56,8 +62,20 @@ variable "sas_viya_dns" {
 # AKS 
 #
 
-variable "sas_viya_aks" {
-  description = "SAS Viya AKS Cluster"
+variable "sas_esp_aks" {
+  description = "SAS ESP AKS Cluster"
+  type        = any
+  default     = {}
+}
+
+variable "sas_esp_aks_identity" {
+  description = "SAS ESP AKS Cluster identity"
+  type        = any
+  default     = {}
+}
+
+variable "sas_esp_aks_private_endpoint" {
+  description = "SAS ESP AKS Cluster Private Endpoint"
   type        = any
   default     = {}
 }
@@ -66,8 +84,14 @@ variable "sas_viya_aks" {
 # ACR
 #
 
-variable "sas_viya_acr" {
-  description = "SAS Viya Azure Container Registry"
+variable "sas_esp_acr" {
+  description = "SAS ESP Azure Container Registry"
+  type        = any
+  default     = {}
+}
+
+variable "sas_esp_acr_identity" {
+  description = "SAS ESP Azure Container Registry identity"
   type        = any
   default     = {}
 }
@@ -76,8 +100,8 @@ variable "sas_viya_acr" {
 # Azure PostgreSQL
 #
 
-variable "sas_viya_postgresql" {
-  description = "SAS Viya Azure PostgreSQL"
+variable "sas_esp_postgresql" {
+  description = "SAS ESP Azure PostgreSQL"
   type        = any
   default     = {}
 }
@@ -86,8 +110,8 @@ variable "sas_viya_postgresql" {
 # Azure Serviec Bus
 #
 
-variable "sas_viya_servicebus" {
-  description = "SAS Viya Azure Service Bus"
+variable "sas_esp_servicebus" {
+  description = "SAS ESP Azure Service Bus"
   type        = any
   default     = {}
 }
@@ -96,124 +120,8 @@ variable "sas_viya_servicebus" {
 # Azure NetApp Files
 #
 
-variable "sas_viya_anf" {
-  description = "SAS Viya Azure NetApp Files"
-  type        = any
-  default     = {}
-}
-
-
-#
-#
-#
-#
-#
-
-variable "sas_viya_identity" {
-  description = "SAS Viya Identities"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_identity_role" {
-  description = "SAS Viya Identity Roles and role assignments"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_iam_role" {
-  description = "HYTE IAM Role assignments"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_storage" {
-  description = "SAS Viya Storage Accounts"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_keyvault" {
-  description = "SAS Viya Keyvaults"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_log_analytics" {
-  description = "SAS Viya Log Analytics Workspaces"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_data_factory" {
-  description = "SAS Viya Data Factories"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_mssql_virtual_machine" {
-  description = "SAS Viya MS SQL Virtual Machines"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_mssql" {
-  description = "SAS Viya MS SQL Virtual Machines"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_monitor" {
-  description = "SAS Viya Azure Monitor"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_backup" {
-  description = "SAS Viya Azure Backup"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_ws_virtual_machine" {
-  description = "SAS Viya Wherescape VMs"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_ws_virtual_machine_keyvault" {
-  description = "SAS Viya Wherescape VM Accounts"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_shir_virtual_machine" {
-  description = "SAS Viya SHIR VMs"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_shir_virtual_machine_keyvault" {
-  description = "SAS Viya SHIR VM Accounts"
-  type        = any
-  default     = {}
-
-}
-
-variable "sas_viya_maintenance" {
-  description = "Azure Maintenance Update Manager configuration"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_policy" {
-  description = "Azure Policies"
-  type        = any
-  default     = {}
-}
-
-variable "sas_viya_azure_defender" {
-  description = "Azure Defender"
+variable "sas_esp_anf" {
+  description = "SAS ESP Azure NetApp Files"
   type        = any
   default     = {}
 }

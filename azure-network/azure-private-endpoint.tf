@@ -36,7 +36,7 @@ resource "azurerm_private_endpoint" "lz" {
     content {
       name                              = each.value.private_service_connection.name
       is_manual_connection              = each.value.private_service_connection.is_manual_connection
-      private_connection_resource_id    = each.value.private_service_connection.private_connection_resource_id
+      private_connection_resource_id    = each.value.private_service_connection.private_connection_resource_id == null ? null : lookup(local.azure_resource_id, each.value.private_service_connection.private_connection_resource_id, null) == null ? each.value.private_service_connection.private_connection_resource_id : local.azure_resource_id[each.value.private_service_connection.private_connection_resource_id]
       private_connection_resource_alias = each.value.private_service_connection.private_connection_resource_alias
       subresource_names                 = each.value.private_service_connection.subresource_names
       request_message                   = each.value.private_service_connection.request_message

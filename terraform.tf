@@ -18,9 +18,9 @@ terraform {
     }
   }
 
-  #backend "azurerm" {
+  backend "azurerm" {
     #
     # Backend is stored in Azure Storage Blob, defined in backend.cfg when initialized
     #
-  #}
+  }
 }

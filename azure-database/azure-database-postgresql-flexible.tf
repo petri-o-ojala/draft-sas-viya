@@ -7,6 +7,7 @@ locals {
 }
 
 resource "azurerm_postgresql_flexible_server" "lz" {
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server
   for_each = {
     for db in local.azure_postgresql_flexible_server : db.resource_index => db
   }
@@ -20,13 +21,14 @@ resource "azurerm_postgresql_flexible_server" "lz" {
     local.common.tags
   )
 
-  administrator_login               = each.value.administrator_login
-  administrator_password            = each.value.administrator_password
-  backup_retention_days             = each.value.backup_retention_days
-  geo_redundant_backup_enabled      = each.value.geo_redundant_backup_enabled
-  create_mode                       = each.value.create_mode
-  delegated_subnet_id               = each.value.delegated_subnet_id
-  private_dns_zone_id               = each.value.private_dns_zone_id
+  administrator_login          = each.value.administrator_login
+  administrator_password       = each.value.administrator_password
+  backup_retention_days        = each.value.backup_retention_days
+  geo_redundant_backup_enabled = each.value.geo_redundant_backup_enabled
+  create_mode                  = each.value.create_mode
+  delegated_subnet_id          = lookup(local.azure_subnet, each.value.delegated_subnet_id, null) == null ? each.value.delegated_subnet_id : local.azure_subnet[each.value.delegated_subnet_id].id
+  private_dns_zone_id          = lookup(local.azure_private_dns_zone, each.value.private_dns_zone_id, null) == null ? each.value.private_dns_zone_id : local.azure_private_dns_zone[each.value.private_dns_zone_id].id
+
   public_network_access_enabled     = each.value.public_network_access_enabled
   point_in_time_restore_time_in_utc = each.value.point_in_time_restore_time_in_utc
   replication_role                  = each.value.replication_role
@@ -86,4 +88,26 @@ resource "azurerm_postgresql_flexible_server" "lz" {
       start_minute = each.value.maintenance_window.start_minute
     }
   }
+}
+resource "azurerm_postgresql_flexible_server_configuration" "lz" {
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server_configuration
+  for_each = {
+    for configuration in local.azure_postgresql_flexible_server_configuration : configuration.resource_index => configuration
+  }
+
+  name      = each.value.name
+  server_id = each.value.server_id
+  value     = each.value.value
+}
+
+resource "azurerm_postgresql_flexible_server_firewall_rule" "lz" {
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server_firewall_rule 
+  for_each = {
+    for rule in local.azure_postgresql_flexible_server_firewall_rule : rule.resource_index => rule
+  }
+
+  name             = each.value.name
+  server_id        = each.value.server_id
+  start_ip_address = each.value.start_ip_address
+  end_ip_address   = each.value.end_ip_address
 }

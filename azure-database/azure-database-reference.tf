@@ -7,6 +7,7 @@ variable "reference" {
   type = object({
     azure_subnet                  = optional(map(any))
     azure_windows_virtual_machine = optional(map(any))
+    azure_private_dns_zone        = optional(map(any))
   })
   default = {}
 }
@@ -14,4 +15,5 @@ variable "reference" {
 locals {
   azure_subnet                  = coalesce(var.reference.azure_subnet, {})
   azure_windows_virtual_machine = coalesce(var.reference.azure_windows_virtual_machine, {})
+  azure_private_dns_zone        = coalesce(var.reference.azure_private_dns_zone, {})
 }

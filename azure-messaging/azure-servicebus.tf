@@ -22,6 +22,7 @@ resource "azurerm_servicebus_namespace" "lz" {
 
   sku                           = each.value.sku
   capacity                      = each.value.capacity
+  premium_messaging_partitions  = each.value.premium_messaging_partitions
   local_auth_enabled            = each.value.local_auth_enabled
   public_network_access_enabled = each.value.public_network_access_enabled
   minimum_tls_version           = each.value.minimum_tls_version

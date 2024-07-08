@@ -108,7 +108,7 @@ resource "azurerm_netapp_volume" "lz" {
   azure_vmware_data_store_enabled      = each.value.azure_vmware_data_store_enabled
   protocols                            = each.value.protocols
   security_style                       = each.value.security_style
-  subnet_id                            = each.value.subnet_id
+  subnet_id                            = lookup(local.azure_subnet, each.value.subnet_id, null) == null ? each.value.subnet_id : local.azure_subnet[each.value.subnet_id].id
   network_features                     = each.value.network_features
   storage_quota_in_gb                  = each.value.storage_quota_in_gb
   snapshot_directory_visible           = each.value.snapshot_directory_visible

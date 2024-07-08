@@ -13,6 +13,7 @@ variable "servicebus" {
       tags                          = optional(map(string))
       sku                           = string
       capacity                      = optional(number)
+      premium_messaging_partitions  = optional(number)
       local_auth_enabled            = optional(bool)
       public_network_access_enabled = optional(bool)
       minimum_tls_version           = optional(string)

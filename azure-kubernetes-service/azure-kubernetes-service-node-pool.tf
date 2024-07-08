@@ -16,9 +16,13 @@ resource "azurerm_kubernetes_cluster_node_pool" "lz" {
   kubernetes_cluster_id = each.value.kubernetes_cluster_id
 
   vm_size                       = each.value.vm_size
+  mode                          = each.value.mode
   capacity_reservation_group_id = each.value.capacity_reservation_group_id
   custom_ca_trust_enabled       = each.value.custom_ca_trust_enabled
   enable_auto_scaling           = each.value.enable_auto_scaling
+  max_count                     = each.value.max_count
+  min_count                     = each.value.min_count
+  node_count                    = each.value.node_count
   enable_host_encryption        = each.value.enable_host_encryption
   enable_node_public_ip         = each.value.enable_node_public_ip
   gpu_instance                  = each.value.gpu_instance
@@ -33,13 +37,13 @@ resource "azurerm_kubernetes_cluster_node_pool" "lz" {
   os_disk_size_gb               = each.value.os_disk_size_gb
   os_disk_type                  = each.value.os_disk_type
   os_sku                        = each.value.os_sku
-  pod_subnet_id                 = each.value.pod_subnet_id
+  pod_subnet_id                 = each.value.pod_subnet_id == null ? null : lookup(local.azure_subnet, each.value.pod_subnet_id, null) == null ? each.value.pod_subnet_id : local.azure_subnet[each.value.pod_subnet_id].id
   proximity_placement_group_id  = each.value.proximity_placement_group_id
   scale_down_mode               = each.value.scale_down_mode
   snapshot_id                   = each.value.snapshot_id
   tags                          = each.value.tags
   ultra_ssd_enabled             = each.value.ultra_ssd_enabled
-  vnet_subnet_id                = each.value.vnet_subnet_id
+  vnet_subnet_id                = each.value.vnet_subnet_id == null ? null : lookup(local.azure_subnet, each.value.vnet_subnet_id, null) == null ? each.value.vnet_subnet_id : local.azure_subnet[each.value.vnet_subnet_id].id
   workload_runtime              = each.value.workload_runtime
   zones                         = each.value.zones
 
@@ -142,5 +146,12 @@ resource "azurerm_kubernetes_cluster_node_pool" "lz" {
       outbound_nat_enabled = each.value.windows_profile.outbound_nat_enabled
     }
   }
-}
 
+  timeouts {
+    # Default for all resources
+    create = "30m"
+    update = "30m"
+    read   = "5m"
+    delete = "30m"
+  }
+}
