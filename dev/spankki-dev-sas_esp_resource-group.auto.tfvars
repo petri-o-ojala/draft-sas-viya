@@ -33,19 +33,6 @@ sas_esp_resource_group = {
     }
     #management_lock = {}
   }
-  "sas-esp-keyvault" = {
-    name     = "rg-ade-keys-prod"
-    location = "westeurope"
-    tags = {
-      "CI_PROJECT_URL" = "https://gitlab.sok.fi/general-infrastructure/azure-cybercom-deployments/subscriptions/s-pankki_afc_dev"
-      "application"    = "AFC"
-      "contact"        = "anssi.yli-leppala@s-pankki.fi"
-      "costcenter"     = "3730403"
-      "department"     = "S-Pankki"
-      "environment"    = "dev"
-    }
-    #management_lock = {}
-  }
   #
   # SAS ESP User-managed Identities
   #
@@ -140,6 +127,20 @@ sas_esp_resource_group = {
   }
   "sas-esp-anf" = {
     name     = "rg-spankki-afc-esp-we-anf-dev"
+    location = "westeurope"
+    tags = {
+      "application" = "AFC"
+      "contact"     = "anssi.yli-leppala@s-pankki.fi"
+      "costcenter"  = "3730403"
+      "department"  = "S-Pankki"
+      "environment" = "dev"
+      "terraform"   = "true"
+      "managed_by"  = "tietoevry"
+    }
+    #management_lock = {}
+  }
+  "sas-esp-common" = {
+    name     = "rg-spankki-afc-esp-we-common-dev"
     location = "westeurope"
     tags = {
       "application" = "AFC"

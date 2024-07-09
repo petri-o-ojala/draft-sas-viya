@@ -6,6 +6,20 @@ Manually allowed access from `88.114.194.49` to the storage account temporarily.
 
 Azure NetApp Files provider has been enabled on the Azure subscription (`az provider register --namespace Microsoft.NetApp`).
 
+# Known issues and TO DO items
+
+- To create a secure environment with least privileged model all resources should use user-managed identities with strict role assignments instead of the system-managed identities with default permissions.  This will
+allow proper IAM access management for the resources without linking them to the lifespan of the individual Azure resources.  However this will require role assignment permissions to the environment, they can be
+removed at later stage when the environment is ready and/or Azure enhances their role assignment permissions or a suitable condition statement for the role assignment is defined.
+
+- Diagnostic settings for all resources to the Log Analytics Workspace.
+
+- Compare the resource permissions to the existing SAS VIAY cluster configuration.
+
+- Firewall openings for bastion access.
+
+- Is there a common practise for private endpoint DNS records?
+
 # Supported Azure serviecs
 
 - Resource Groups
@@ -21,8 +35,16 @@ Azure NetApp Files provider has been enabled on the Azure subscription (`az prov
 - Azure NetApp Files
 - Azure Files NFS
 - Azure Kubernetes Service
+- Azure Keyvaults
+- Azure Backup
+- Azure Virtual Machines (Windows and Linux)
 
 The terraform modules used may support other resources as well within the Azure service context.
+
+## Terraform State
+
+A resource group for terraform `rg-spankki-afc-esp-we-terraform-dev` has been created with Storage Account for this SAS ESP deployment.  RBAC IAM is enabled for the storage account to allow access control with IAM.
+The new storage container is not yet in use due to lacking permissions for the Terraform service principal.
 
 # Deployment components
 
@@ -79,10 +101,8 @@ Azure Files NFS share configuration and deployment has been tested with private 
 
 Azure Kubernetes Service configuration and deployment has been tested with five node pools (default, cas, compute, stateless and stateful).  AKS cluster has been configured as private cluster and node pools with auto scaling (except for default).  `SystemAssigned` identity is being used as there are currently not enough permissions to use UserAssigned identity for AKS, it requires IAM role assignments to the network resource group (or resources inside it).
 
-## TO BE ADDED
+## Azure Virtual Machines
 
-The following modules to be included:
+Windows Virtual Machine (for e.g. bastion needs) configuration deployment with VM Extensions have been tested.  Will be deployed if needed.
 
-- Support for Azure Virtual Machines
-- Add Diagnostic Settings
-
+Linux Virtual Machine (for e.g. bastion needs) configuration deployment with VM Extensions have been tested.  Will be deployed if needed.

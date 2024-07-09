@@ -49,6 +49,7 @@ sas_esp_aks_private_endpoint = {
 
 }
 
+/*
 sas_esp_aks = {
   cluster = {
     # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
@@ -95,11 +96,9 @@ sas_esp_aks = {
       }
       identity = {
         type = "SystemAssigned"
-        /*
-        identity_ids = [
+        NOT_USED_YET_identity_ids = [
           "/subscriptions/4b8befc9-7476-4b49-9e41-75dcd76f343a/resourceGroups/rg-spankki-afc-esp-we-identity-dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity-spankki-afc-esp-we-aks-dev"
         ]
-*/
       }
       tags = {
         "application" = "AFC"
@@ -247,3 +246,4 @@ sas_esp_aks = {
     }
   }
 }
+*/

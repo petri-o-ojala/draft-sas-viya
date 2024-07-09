@@ -14,6 +14,12 @@ variable "spankki_entra_id" {
   default     = {}
 }
 
+variable "sas_esp_tietoevry_azure_terraform" {
+  description = "S-Pankki ESP Terraform resources"
+  type        = any
+  default     = {}
+}
+
 #
 # Common infrastructure
 #
@@ -92,6 +98,22 @@ variable "sas_esp_acr" {
 
 variable "sas_esp_acr_identity" {
   description = "SAS ESP Azure Container Registry identity"
+  type        = any
+  default     = {}
+}
+
+#
+# Azure Virtual Machine for Bastion
+#
+
+variable "sas_esp_vm_bastion" {
+  description = "SAS ESP Virtual Machine for Bastion"
+  type        = any
+  default     = {}
+}
+
+variable "sas_esp_vm_bastion_identity" {
+  description = "SAS ESP Virtual Machine for Bastion identity"
   type        = any
   default     = {}
 }
