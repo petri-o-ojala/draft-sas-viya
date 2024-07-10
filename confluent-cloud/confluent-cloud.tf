@@ -3,7 +3,10 @@
 #
 
 locals {
-  confluent_environment = confluent_environment.lz
+  confluent_environment = merge(
+    local.reference_confluent_environment,
+    confluent_environment.lz
+  )
 }
 
 resource "confluent_environment" "lz" {

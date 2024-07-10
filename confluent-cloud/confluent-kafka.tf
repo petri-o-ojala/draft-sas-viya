@@ -3,8 +3,14 @@
 #
 
 locals {
-  confluent_kafka_cluster = confluent_kafka_cluster.lz
-  confluent_kafka_topic   = confluent_kafka_topic.lz
+  confluent_kafka_cluster = merge(
+    confluent_kafka_cluster.lz,
+    local.reference_confluent_kafka_cluster
+  )
+  confluent_kafka_topic = merge(
+    confluent_kafka_topic.lz,
+    local.reference_confluent_kafka_topic
+  )
 }
 
 resource "confluent_kafka_cluster" "lz" {

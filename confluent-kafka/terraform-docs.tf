@@ -1,5 +1,0 @@
-/*
- *
- * Confluent Kafka
- *  
- */

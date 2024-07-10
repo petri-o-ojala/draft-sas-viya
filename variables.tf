@@ -40,14 +40,20 @@ variable "sas_esp_log_analytics" {
 # Confluent Cloud
 #
 
-variable "sas_esp_confluent_cloud" {
-  description = "SAS ESP Confluent Cloud environment"
+variable "sas_esp_confluent_cloud_kafka" {
+  description = "SAS ESP Confluent Cloud Kafka environment"
   type        = any
   default     = {}
 }
 
-variable "sas_esp_confluent_cloud_kafka" {
-  description = "SAS ESP Confluent Cloud Kafka configuration"
+variable "sas_esp_confluent_cloud_kafka_ops_team" {
+  description = "SAS ESP Confluent Cloud Kafka OPS-Team"
+  type        = any
+  default     = {}
+}
+
+variable "sas_esp_confluent_cloud_kafka_admin_product_team" {
+  description = "SAS ESP Confluent Cloud Kafka Admin Product team"
   type        = any
   default     = {}
 }
