@@ -47,6 +47,9 @@ sas_esp_confluent_cloud_kafka_ops_team = {
   # IAM for OPS team
   #
   iam = {
+    #
+    # Service Accounts for application manager, consumer and producer
+    #
     service_account = {
       "app-manager" = {
         display_name = "app-manager"
@@ -61,6 +64,9 @@ sas_esp_confluent_cloud_kafka_ops_team = {
         description  = "Service account to produce to 'orders' topic of 'inventory' Kafka cluster"
       }
     }
+    #
+    # Cluster Admin role for application manager
+    #
     role_binding = {
       "app-manager-kafka-cluster-admin" = {
         principal   = "app-manager" # reference to service_account
@@ -68,6 +74,9 @@ sas_esp_confluent_cloud_kafka_ops_team = {
         crn_pattern = "kafka-cluster:sas-esp-basic" # reference to Kafka cluster
       }
     }
+    #
+    # Cloud and Kafka API keys for application manager
+    #
     api_key = {
       "app-manager-kafka-api-key" = {
         display_name = "app-manager-kafka-api-key"
