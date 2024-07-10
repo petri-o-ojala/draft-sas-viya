@@ -29,7 +29,9 @@ for> ln -s $x
 for> done
 ````
 
-## Set Azure credentials for the Service Principal
+## Set Azure credentials for terraform
+
+There is no need to login to Azure with `az`.
 
 ````
 ojala@Petri-MacbookPro draft-sas-viya % export ARM_CLIENT_ID=4b8c5085-ca25-4922-9c71-2726bf502209
@@ -177,6 +179,8 @@ OpenTofu has compared your real infrastructure against your configuration and fo
 │ verbosity of these warnings, use the -compact-warnings option.
 ╵
 ````
+
+The warnings may exist for any variables that have been set but not used.  If one has a configuration defined but doesn't want to use it, the preferred way is to comment it out but one could also e.g. have `X` prefix for the variable name just to make sure it's not used.   All configuration parameters default to empty configuration.
 
 ## Versions
 
