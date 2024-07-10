@@ -41,7 +41,7 @@ sas_esp_tietoevry_azure_terraform = {
         network_rules = {
           default_action = "Deny"
           ip_rules = [
-            "88.114.194.4"
+            "88.114.194.49"
           ]
         }
         blob_properties = {
@@ -56,10 +56,10 @@ sas_esp_tietoevry_azure_terraform = {
           "terraform"   = "true"
           "managed_by"  = "tietoevry"
         }
-        /*
         container = [
           {
             name = "tf-state-sas-esp-dev"
+            /*
             iam = [
               {
                 role_definition_name = "Storage Blob Data Contributor"
@@ -68,9 +68,9 @@ sas_esp_tietoevry_azure_terraform = {
                 ]
               }
             ]
+*/
           }
         ]
-*/
       }
     }
   }

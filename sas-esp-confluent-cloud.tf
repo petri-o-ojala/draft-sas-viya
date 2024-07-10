@@ -27,6 +27,7 @@ module "sas_esp_confluent_cloud_kafka_ops_team" {
 # This output is from the example code, we don't want to do it this way -- need to add a generic terraform output module that can be used
 # generate output with terraform templates and input variables.
 #
+/*
 output "resource-ids" {
   value = <<-EOT
   Environment ID:     ${module.sas_esp_confluent_cloud_kafka.confluent_environment["sas-esp-dev"].id}
@@ -48,6 +49,7 @@ output "resource-ids" {
 
   sensitive = true
 }
+*/
 
 #
 # Kafka Admin Product team

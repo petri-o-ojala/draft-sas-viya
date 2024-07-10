@@ -23,14 +23,7 @@ sas_esp_aks_identity = {
       }
       #
       # Permissions for AKS
-      /*
       iam = [
-
-Error:
-│ Error: authorization.RoleAssignmentsClient#Create: Failure responding to request: StatusCode=403 -- Original Error: autorest/azure: Service returned an error. Status=403 Code="AuthorizationFailed" Message="The client '0894b9a2-fc3e-47ce-90af-bf85d0688608' with object id '0894b9a2-fc3e-47ce-90af-bf85d0688608' does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/4b8befc9-7476-4b49-9e41-75dcd76f343a/resourceGroups/rg-networking/providers/Microsoft.Network/virtualNetworks/spankki-vnet-afc-dev-we-internal-01/providers/Microsoft.Authorization/roleAssignments/3afb38f5-1943-595c-e7de-f84d53d15337' or the scope is invalid. If access was recently granted, please refresh your credentials."
-
-│ Error: authorization.RoleAssignmentsClient#Create: Failure responding to request: StatusCode=403 -- Original Error: autorest/azure: Service returned an error. Status=403 Code="AuthorizationFailed" Message="The client '0894b9a2-fc3e-47ce-90af-bf85d0688608' with object id '0894b9a2-fc3e-47ce-90af-bf85d0688608' does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/4b8befc9-7476-4b49-9e41-75dcd76f343a/resourceGroups/rg-networking/providers/Microsoft.Network/privateDnsZones/privatelink.westeurope.azmk8s.io/providers/Microsoft.Authorization/roleAssignments/77a65979-250d-5c01-11db-88b9a0f32f85' or the scope is invalid. If access was recently granted, please refresh your credentials."
-
         {
           scope                = "/subscriptions/4b8befc9-7476-4b49-9e41-75dcd76f343a/resourceGroups/rg-networking/providers/Microsoft.Network/virtualNetworks/spankki-vnet-afc-dev-we-internal-01"
           role_definition_name = "Network Contributor"
@@ -40,7 +33,6 @@ Error:
           role_definition_name = "Private DNS Zone Contributor"
         }
       ]
-*/
     }
   }
 }
@@ -68,9 +60,9 @@ sas_esp_aks = {
       node_resource_group       = "rg-spankki-afc-esp-we-aks-nodes-dev"
       azure_policy_enabled      = true
       private_cluster_enabled   = true
-      # private_dns_zone_id               = "privatelink-aks"
+      private_dns_zone_id               = "privatelink-aks"
       role_based_access_control_enabled = true
-      #   enable_log_analytics_workspace = true
+      # enable_log_analytics_workspace = true
       network_plugin               = "azure"
       network_policy               = "calico"
       only_critical_addons_enabled = true

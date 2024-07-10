@@ -6,6 +6,7 @@
 # Naming scheme:
 # rg-spankki-afc-esp-<region>-<function>-<environment>
 
+/*
 sas_esp_azure_files_nfs = {
   account = {
     "sas-esp-common-nfs" = {
@@ -88,3 +89,4 @@ sas_esp_azure_files_nfs_private_endpoint = {
     }
   }
 }
+*/
