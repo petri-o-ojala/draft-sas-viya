@@ -5,6 +5,17 @@
 variable "confluent" {
   description = "Confluent Kafka"
   type = object({
+    schema_registry = optional(map(object({
+      cluster = optional(map(object({
+        # https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/confluent_schema_registry_cluster
+      })))
+      cluster_config = optional(map(string({
+        # https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/confluent_schema_registry_cluster_config
+      })))
+      cluster_mode = optional(map(object({
+        # https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/confluent_schema_registry_cluster_mode
+      })))
+    })))
     cluster = optional(map(object({
       # https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/confluent_kafka_cluster
       display_name = string
@@ -42,6 +53,9 @@ variable "confluent" {
       }))
       config = optional(map(string))
 
+    })))
+    acl = optional(map(object({
+      # https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/confluent_kafka_acl
     })))
     topic = optional(map(object({
       # https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/confluent_kafka_topic

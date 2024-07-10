@@ -12,6 +12,15 @@ variable "confluent" {
         package = string
       }))
     })))
+    service_account = optional(map(object({
+      # https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/confluent_service_account
+    })))
+    role_binding = optional(map(object({
+      # https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/confluent_role_binding
+    })))
+    api_key = optional(map(object({
+      # https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/confluent_api_key
+    })))
     network = optional(map(object({
       # https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/confluent_network
       display_name     = string
