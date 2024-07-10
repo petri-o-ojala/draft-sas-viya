@@ -69,7 +69,7 @@ resource "confluent_network_link_service" "lz" {
     for_each = try(each.value.network, null) == null ? [] : [1]
 
     content {
-      id = lookup(local.confluent_network, each.value.network.id, null) == null ? each.value.network.id : local.confluent_environment[each.value.network.id].id
+      id = lookup(local.confluent_network, each.value.network.id, null) == null ? each.value.network.id : local.confluent_network[each.value.network.id].id
     }
   }
 
@@ -106,7 +106,7 @@ resource "confluent_network_link_endpoint" "lz" {
     for_each = try(each.value.network, null) == null ? [] : [1]
 
     content {
-      id = lookup(local.confluent_network, each.value.network.id, null) == null ? each.value.network.id : local.confluent_environment[each.value.network.id].id
+      id = lookup(local.confluent_network, each.value.network.id, null) == null ? each.value.network.id : local.confluent_network[each.value.network.id].id
     }
   }
 
