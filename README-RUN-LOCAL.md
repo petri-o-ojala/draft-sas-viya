@@ -4,6 +4,18 @@
 
 Install OpenTofu client (e.g. 1.7.0) and `git` clients.
 
+## Access to Azure Storage Account
+
+You may need to open network access from your own public IP to the Azure Storage Account being used for the terraform state container.
+
+Check your public IP address (e.g. `curl https://ifocnfig.me/`).
+
+Go to storage account `tfspankkisasespdev` in the DEV subscription (`4b8befc9-7476-4b49-9e41-75dcd76f343a`).  Select `Networking` from the "Security + networking` menu on the left.
+
+In the `Firewall` section check that your public IP is listed.   If it is not listed, elevate your permissions through PIM and add your IP address there.
+
+Running the code will show a resource change to remove your IP address from the storage account firewall as it's not included in the configuration files (`spankki-dev-sas_esp_terraform.auto.tfvars`).
+
 ## Clone repository
 
 ````
