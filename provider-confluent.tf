@@ -1,0 +1,7 @@
+#
+# Terraform providers
+#
+
+provider "confluent" {
+}
+

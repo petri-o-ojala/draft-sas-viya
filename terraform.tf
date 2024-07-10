@@ -16,6 +16,11 @@ terraform {
       source  = "cloudposse/template"
       version = "2.2.0"
     }
+    confluent = {
+      # Confluent Cloud
+      source  = "registry.terraform.io/confluentinc/confluent"
+      version = "1.80.0"
+    }
   }
 
   backend "azurerm" {

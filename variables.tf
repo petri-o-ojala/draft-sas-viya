@@ -37,6 +37,22 @@ variable "sas_esp_log_analytics" {
 }
 
 #
+# Confluent Cloud
+#
+
+variable "sas_esp_confluent_cloud" {
+  description = "SAS ESP Confluent Cloud environment"
+  type        = any
+  default     = {}
+}
+
+variable "sas_esp_confluent_cloud_kafka" {
+  description = "SAS ESP Confluent Cloud Kafka configuration"
+  type        = any
+  default     = {}
+}
+
+#
 # Azure Networking
 #
 
