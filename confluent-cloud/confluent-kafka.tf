@@ -57,7 +57,7 @@ resource "confluent_kafka_cluster" "lz" {
     for_each = try(each.value.environment, null) == null ? [] : [1]
 
     content {
-      id = each.value.environment.id
+      id = lookup(local.confluent_environment, each.value.environment.id, null) == null ? each.value.environment.id : local.confluent_environment[each.value.environment.id].id
     }
   }
 
@@ -76,6 +76,10 @@ resource "confluent_kafka_cluster" "lz" {
       id = each.value.byok_key.id
     }
   }
+
+  depends_on = [
+    confluent_kafka_cluster.lz
+  ]
 }
 
 resource "confluent_kafka_cluster_config" "lz" {
@@ -103,6 +107,10 @@ resource "confluent_kafka_cluster_config" "lz" {
       secret = each.value.credentials.secret
     }
   }
+
+  depends_on = [
+    confluent_kafka_cluster.lz
+  ]
 }
 
 resource "confluent_kafka_topic" "lz" {
@@ -132,5 +140,9 @@ resource "confluent_kafka_topic" "lz" {
       secret = each.value.credentials.secret
     }
   }
+
+  depends_on = [
+    confluent_kafka_cluster.lz
+  ]
 }
 
