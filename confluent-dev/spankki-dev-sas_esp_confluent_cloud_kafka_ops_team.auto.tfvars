@@ -14,15 +14,16 @@ sas_esp_confluent_cloud_kafka = {
       }
     }
   }
-  #schema_registry = {
-    #cluster = {
-      #"sas-esp-standard" = {
-        #environment = {
+  schema_registry = {
+    cluster = {
+      "sas-esp-standard" = {
+        environment = {
           #id = "sas-esp-dev"
-        #}
-      #}
-    #}
-  #}
+          id = "env-7q91oo"
+        }
+      }
+    }
+  }
   #
   # Kafka Cluster
   #
@@ -35,7 +36,22 @@ sas_esp_confluent_cloud_kafka = {
         region       = "westeurope"
         standard        = {}
         environment = {
-          id = "sas-esp-dev"
+          #id = "sas-esp-dev"
+          id = "env-7q91oo"
+        }
+      }
+    }
+    topic = {
+      "sas-esp-topic1" = {
+        kafka_cluster = {
+          id = "sas-esp-standard"
+        }
+        topic_name = "sas-esp-topic1"
+        #TODO: rest_endpoint = "kafka_cluster.rest_endpoint"
+        credentials = {
+          #TODO: app-manager CLOUD API KEY and SECRET
+          key = "EWPP3RCOC3QHNBBM"
+          secret = "MJXLrRNr7HxSfzOxLKTRTdG5jO5gHzpeJZ4TlutxY+3H/O3eBCSc3X2/mLoWVLIh"
         }
       }
     }
