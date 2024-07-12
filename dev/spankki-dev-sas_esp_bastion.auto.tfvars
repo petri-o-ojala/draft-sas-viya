@@ -7,6 +7,7 @@
 # rg-spankki-afc-esp-<region>-<function>-<environment>
 
 sas_esp_vm_bastion_keyvault = {
+  /*
   secret = {
     "bastion-admin-user" = {
       key_vault_id = "sas-esp"
@@ -27,9 +28,9 @@ sas_esp_vm_bastion_keyvault = {
       }
     }
   }
+*/
 }
 
-/*
 sas_esp_vm_bastion_identity = {
   user_assigned = {
     "sas-esp-bastion" = {
@@ -67,6 +68,7 @@ sas_esp_vm_bastion = {
       ]
     }
   }
+  /*
   linux_virtual_machine = {
     "sas-esp-bastion" = {
       name                = "vm-spankki-afc-esp-we-bastion-dev"
@@ -186,4 +188,5 @@ sas_esp_vm_bastion = {
     }
   }
   */
-# }
+  # }
+}
