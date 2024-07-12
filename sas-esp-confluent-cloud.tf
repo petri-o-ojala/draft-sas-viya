@@ -31,7 +31,7 @@ module "sas_esp_confluent_cloud_kafka_ops_team" {
 output "resource-ids" {
   value = <<-EOT
   Environment ID:     ${module.sas_esp_confluent_cloud_kafka.confluent_environment["sas-esp-dev"].id}
-  Kafka cluster ID:   ${module.sas_esp_confluent_cloud_kafka.confluent_kafka_cluster["sas-esp-basic"].id}
+  Kafka cluster ID:   ${module.sas_esp_confluent_cloud_kafka.confluent_kafka_cluster["sas-esp-standard"].id}
 
   Service Accounts with CloudClusterAdmin role and their API Keys (API Keys inherit the permissions granted to the owner):
   ${module.sas_esp_confluent_cloud_kafka_ops_team.confluent_service_account["app-manager"].display_name}:                     ${module.sas_esp_confluent_cloud_kafka_ops_team.confluent_service_account["app-manager"].id}

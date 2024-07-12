@@ -8,7 +8,7 @@ sas_esp_confluent_cloud_kafka = {
   #
   environment = {
     "sas-esp-dev" = {
-      display_name = "Development2"
+      display_name = "Development"
       stream_governance = {
         package = "ESSENTIALS"
       }
@@ -29,7 +29,7 @@ sas_esp_confluent_cloud_kafka = {
   kafka = {
     cluster = {
       "sas-esp-standard" = {
-        display_name = "inventory"
+        display_name = "sas-esp-kafka-dev"
         availability = "SINGLE_ZONE"
         cloud        = "AZURE"
         region       = "westeurope"
@@ -53,15 +53,15 @@ sas_esp_confluent_cloud_kafka_ops_team = {
     service_account = {
       "app-manager" = {
         display_name = "app-manager"
-        description  = "Service account to manage 'inventory' Kafka cluster"
+        description  = "Service account to manage 'sas-esp-kafka-dev' Kafka cluster"
       }
       "app-consumer" = {
         display_name = "app-consumer"
-        description  = "Service account to consume from 'orders' topic of 'inventory' Kafka cluster"
+        description  = "Service account to consume from 'orders' topic of 'sas-esp-kafka-dev' Kafka cluster"
       }
       "app-producer" = {
         display_name = "app-producer"
-        description  = "Service account to produce to 'orders' topic of 'inventory' Kafka cluster"
+        description  = "Service account to produce to 'orders' topic of 'sas-esp-kafka-dev' Kafka cluster"
       }
     }
     #
