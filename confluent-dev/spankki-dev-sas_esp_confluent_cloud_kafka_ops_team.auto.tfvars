@@ -14,15 +14,15 @@ sas_esp_confluent_cloud_kafka = {
       }
     }
   }
-  schema_registry = {
-    cluster = {
-      "sas-esp-standard" = {
-        environment = {
-          id = "sas-esp-dev"
-        }
-      }
-    }
-  }
+  #schema_registry = {
+    #cluster = {
+      #"sas-esp-standard" = {
+        #environment = {
+          #id = "sas-esp-dev"
+        #}
+      #}
+    #}
+  #}
   #
   # Kafka Cluster
   #
