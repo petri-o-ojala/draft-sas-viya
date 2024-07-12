@@ -6,6 +6,28 @@
 # Naming scheme:
 # rg-spankki-afc-esp-<region>-<function>-<environment>
 
+sas_esp_vm_bastion_keyvault = {
+  secret = {
+    "bastion-admin-user" = {
+      key_vault_id = "sas-esp"
+      name         = "spankki-sp-afc-dev-bastion-admin-username"
+      content_type = "Username"
+      value        = "bastion-admin"
+    }
+    "bastion-admin-password" = {
+      key_vault_id = "sas-esp"
+      name         = "spankki-sp-afc-dev-bastion-admin-password"
+      content_type = "Password"
+      random_password = {
+        length      = 16
+        min_upper   = 2
+        min_lower   = 2
+        min_numeric = 2
+        special     = false
+      }
+    }
+  }
+}
 
 /*
 sas_esp_vm_bastion_identity = {
@@ -37,30 +59,17 @@ sas_esp_vm_bastion = {
         {
           name                          = "ipconfig1"
           primary                       = true
-          private_ip_address_allocation = "Dynamic"
+          private_ip_address_allocation = "Static"
           private_ip_address_version    = "IPv4"
-          subnet_id                     = "sas-esp-dev_sas-esp-dev-aks"
-        }
-      ]
-    },
-    "sas-esp-linux" = {
-      name                = "nic-spankki-afc-esp-we-linux-dev"
-      location            = "westeurope"
-      resource_group_name = "rg-spankki-afc-esp-we-common-dev"
-      ip_configuration = [
-        {
-          name                          = "ipconfig1"
-          primary                       = true
-          private_ip_address_allocation = "Dynamic"
-          private_ip_address_version    = "IPv4"
+          private_ip_address            = "10.204.70.240"
           subnet_id                     = "sas-esp-dev_sas-esp-dev-aks"
         }
       ]
     }
   }
   linux_virtual_machine = {
-    "sas-esp-linux" = {
-      name                = "vm-spankki-afc-esp-we-linux-dev"
+    "sas-esp-bastion" = {
+      name                = "vm-spankki-afc-esp-we-bastion-dev"
       location            = "westeurope"
       resource_group_name = "rg-spankki-afc-esp-we-common-dev"
       identity = {
@@ -81,8 +90,8 @@ sas_esp_vm_bastion = {
         disk_size_gb         = 128
         caching              = "ReadWrite"
       }
-      computer_name                   = "linux-dev-vm"
-      admin_username                  = "linuxadmin"
+      computer_name                   = "dev-bastion"
+      admin_username                  = "te-admin"
       disable_password_authentication = true
       admin_ssh_key = [
         {
@@ -95,13 +104,14 @@ sas_esp_vm_bastion = {
       patch_assessment_mode    = "ImageDefault"
       patch_mode               = "ImageDefault"
       network_interface_ids = [
-        "sas-esp-linux"
+        "sas-esp-bastion"
       ]
       boot_diagnostics = {
         storage_account_uri = null
       }
     }
   }
+  /*
   windows_virtual_machine = {
     "sas-esp-bastion" = {
       name                = "vm-spankki-afc-esp-we-bastion-dev"
@@ -175,5 +185,5 @@ sas_esp_vm_bastion = {
       }
     }
   }
-}
-*/
+  */
+# }

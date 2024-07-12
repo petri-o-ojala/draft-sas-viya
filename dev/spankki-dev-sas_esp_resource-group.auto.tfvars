@@ -139,6 +139,20 @@ sas_esp_resource_group = {
     }
     #management_lock = {}
   }
+  "sas-esp-keyvault" = {
+    name     = "rg-spankki-afc-esp-we-keyvault-dev"
+    location = "westeurope"
+    tags = {
+      "application" = "AFC"
+      "contact"     = "anssi.yli-leppala@s-pankki.fi"
+      "costcenter"  = "3730403"
+      "department"  = "S-Pankki"
+      "environment" = "dev"
+      "terraform"   = "true"
+      "managed_by"  = "tietoevry"
+    }
+    #management_lock = {}
+  }
   "sas-esp-common" = {
     name     = "rg-spankki-afc-esp-we-common-dev"
     location = "westeurope"

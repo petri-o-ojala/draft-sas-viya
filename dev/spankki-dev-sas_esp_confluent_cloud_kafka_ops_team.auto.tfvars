@@ -2,7 +2,8 @@
 # SAS ESP Confluent Cloud Kafka OPS Team
 #
 
-Xsas_esp_confluent_cloud_kafka = {
+/*
+sas_esp_confluent_cloud_kafka = {
   #
   # Confluent Cloud environment
   #
@@ -42,7 +43,7 @@ Xsas_esp_confluent_cloud_kafka = {
   }
 }
 
-Xsas_esp_confluent_cloud_kafka_ops_team = {
+sas_esp_confluent_cloud_kafka_ops_team = {
   #
   # IAM for OPS team
   #
@@ -110,3 +111,4 @@ Xsas_esp_confluent_cloud_kafka_ops_team = {
     }
   }
 }
+*/

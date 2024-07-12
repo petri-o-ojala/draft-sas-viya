@@ -24,6 +24,53 @@ sas_esp_tietoevry_azure_terraform = {
       }
     }
   }
+  storage_private_endpoint = {
+    private_endpoint = {
+      # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint
+      #
+      # Kafka
+      #
+      "terraform-state" = {
+        name                = "endpoint-spankki-afc-esp-we-terraform-state-dev"
+        resource_group_name = "rg-networking"
+        location            = "westeurope"
+        tags = {
+          "application" = "AFC"
+          "contact"     = "anssi.yli-leppala@s-pankki.fi"
+          "costcenter"  = "3730403"
+          "department"  = "S-Pankki"
+          "environment" = "dev"
+          "terraform"   = "true"
+          "managed_by"  = "tietoevry"
+        }
+        subnet_id = "sas-esp-dev_sas-esp-dev-endpoint"
+        private_service_connection = {
+          name                           = "endpoint-spankki-afc-esp-we-nfs-common-dev"
+          is_manual_connection           = false
+          private_connection_resource_id = "storage-account-terraform-state"
+          subresource_names = [
+            "blob"
+          ]
+        }
+        ip_configuration = [
+          {
+            name               = "privatelink-storage-terraform-state-dev"
+            private_ip_address = "10.204.71.6"
+            subresource_name   = "blob"
+          }
+        ]
+
+        #
+        # Deployed through policy, only for drift control
+        #private_dns_zone_group = {
+        #  name = "deployedByPolicy"
+        #  private_dns_zone_ids = [
+        #    "/subscriptions/d8e6d4cc-0f13-4246-a43d-8875ee1a6165/resourceGroups/rg-sok-private-dns-prod/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net"
+        #  ]
+        #}
+      }
+    }
+  }
   storage = {
     account = {
       "terraform-state" = {
@@ -41,7 +88,9 @@ sas_esp_tietoevry_azure_terraform = {
         network_rules = {
           default_action = "Deny"
           ip_rules = [
-            "88.114.194.49"
+            "193.210.162.114",
+            "88.114.194.49",
+            "85.29.92.90"
           ]
         }
         blob_properties = {
