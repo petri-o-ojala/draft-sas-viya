@@ -18,6 +18,15 @@ sas_esp_log_analytics = {
       allow_resource_only_permissions = true
       internet_ingestion_enabled      = false
       internet_query_enabled          = false
+      tags = {
+        "application" = "S-Pankki AFC ESP"
+        "contact"     = "anssi.yli-leppala@s-pankki.fi"
+        "costcenter"  = "3730403"
+        "department"  = "S-Pankki"
+        "environment" = "dev"
+        "terraform"   = "true"
+        "managed_by"  = "tietoevry"
+      }
     }
   }
 }

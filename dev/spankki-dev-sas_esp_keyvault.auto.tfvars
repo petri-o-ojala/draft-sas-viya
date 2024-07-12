@@ -24,6 +24,15 @@ sas_esp_keyvault = {
         bypass         = "AzureServices"
         default_action = "Allow"
       }
+      tags = {
+        "application" = "S-Pankki AFC ESP"
+        "contact"     = "anssi.yli-leppala@s-pankki.fi"
+        "costcenter"  = "3730403"
+        "department"  = "S-Pankki"
+        "environment" = "dev"
+        "terraform"   = "true"
+        "managed_by"  = "tietoevry"
+      }
     },
     "sas-subscription" = {
       name                            = "kv-spankki-afc-we-dev"

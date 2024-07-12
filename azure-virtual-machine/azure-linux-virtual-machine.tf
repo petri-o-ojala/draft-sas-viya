@@ -4,6 +4,11 @@
 
 locals {
   azurerm_linux_virtual_machine = azurerm_linux_virtual_machine.lz
+
+  azurerm_virtual_machine = merge(
+    azurerm_linux_virtual_machine.lz,
+    azurerm_windows_virtual_machine.lz
+  )
 }
 
 resource "azurerm_linux_virtual_machine" "lz" {
@@ -11,12 +16,13 @@ resource "azurerm_linux_virtual_machine" "lz" {
     for vm in local.azure_linux_virtual_machine : vm.resource_index => vm
   }
 
-  name                = each.value.name
-  location            = each.value.location
-  resource_group_name = each.value.resource_group_name
-  admin_username      = each.value.admin_username == null ? null : lookup(local.azurerm_key_vault_secret, each.value.admin_username, null) == null ? each.value.admin_username : data.azurerm_key_vault_secret.lz[each.value.admin_username].value # local.azurerm_key_vault_secret[each.value.admin_username].value
-  admin_password      = each.value.admin_password == null ? null : lookup(local.azurerm_key_vault_secret, each.value.admin_password, null) == null ? each.value.admin_password : data.azurerm_key_vault_secret.lz[each.value.admin_password].value # local.azurerm_key_vault_secret[each.value.admin_password].value
-  size                = each.value.size
+  name                            = each.value.name
+  location                        = each.value.location
+  resource_group_name             = each.value.resource_group_name
+  admin_username                  = each.value.admin_username == null ? null : lookup(local.azurerm_key_vault_secret, each.value.admin_username, null) == null ? each.value.admin_username : data.azurerm_key_vault_secret.lz[each.value.admin_username].value # local.azurerm_key_vault_secret[each.value.admin_username].value
+  admin_password                  = each.value.admin_password == null ? null : lookup(local.azurerm_key_vault_secret, each.value.admin_password, null) == null ? each.value.admin_password : data.azurerm_key_vault_secret.lz[each.value.admin_password].value # local.azurerm_key_vault_secret[each.value.admin_password].value
+  disable_password_authentication = each.value.disable_password_authentication
+  size                            = each.value.size
 
   network_interface_ids = [
     for nic_id in each.value.network_interface_ids : lookup(local.azurerm_network_interface, nic_id, null) == null ? nic_id : local.azurerm_network_interface[nic_id].id

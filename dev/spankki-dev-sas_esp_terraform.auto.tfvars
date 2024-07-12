@@ -14,7 +14,7 @@ sas_esp_tietoevry_azure_terraform = {
       name     = "rg-spankki-afc-esp-we-terraform-dev"
       location = "westeurope"
       tags = {
-        "application" = "AFC"
+        "application" = "S-Pankki AFC ESP"
         "contact"     = "anssi.yli-leppala@s-pankki.fi"
         "costcenter"  = "3730403"
         "department"  = "S-Pankki"
@@ -32,10 +32,10 @@ sas_esp_tietoevry_azure_terraform = {
       #
       "terraform-state" = {
         name                = "endpoint-spankki-afc-esp-we-terraform-state-dev"
-        resource_group_name = "rg-networking"
+        resource_group_name = "rg-spankki-afc-esp-we-terraform-dev"
         location            = "westeurope"
         tags = {
-          "application" = "AFC"
+          "application" = "S-Pankki AFC ESP"
           "contact"     = "anssi.yli-leppala@s-pankki.fi"
           "costcenter"  = "3730403"
           "department"  = "S-Pankki"
@@ -88,16 +88,16 @@ sas_esp_tietoevry_azure_terraform = {
         network_rules = {
           default_action = "Deny"
           ip_rules = [
-            "193.210.162.114",
             "88.114.194.49",
-            "85.29.92.90"
+            "85.29.92.90",
+            "46.132.29.118"
           ]
         }
         blob_properties = {
           versioning_enabled = true
         }
         tags = {
-          "application" = "AFC"
+          "application" = "S-Pankki AFC ESP"
           "contact"     = "anssi.yli-leppala@s-pankki.fi"
           "costcenter"  = "3730403"
           "department"  = "S-Pankki"

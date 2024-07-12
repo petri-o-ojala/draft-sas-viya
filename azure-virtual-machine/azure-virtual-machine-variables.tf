@@ -4,6 +4,56 @@
 
 variable "vm" {
   type = object({
+    managed_disk = optional(map(object({
+      name                              = string
+      location                          = string
+      resource_group_name               = string
+      storage_account_type              = string
+      create_option                     = string
+      tags                              = optional(map(string))
+      disk_encryption_set_id            = optional(string)
+      disk_iops_read_write              = optional(number)
+      disk_mbps_read_write              = optional(number)
+      disk_iops_read_only               = optional(number)
+      disk_mbps_read_only               = optional(number)
+      upload_size_bytes                 = optional(number)
+      disk_size_gb                      = optional(string)
+      hyper_v_generation                = optional(string)
+      image_reference_id                = optional(string)
+      gallery_image_reference_id        = optional(string)
+      logical_sector_size               = optional(number)
+      optimized_frequent_attach_enabled = optional(bool)
+      performance_plus_enabled          = optional(bool)
+      os_type                           = optional(string)
+      source_resource_id                = optional(string)
+      source_uri                        = optional(string)
+      storage_account_id                = optional(string)
+      tier                              = optional(string)
+      trusted_launch_enabled            = optional(bool)
+      security_type                     = optional(string)
+      secure_vm_disk_encryption_set_id  = optional(string)
+      on_demand_bursting_enabled        = optional(bool)
+      network_access_policy             = optional(string)
+      disk_access_id                    = optional(string)
+      public_network_access_enabled     = optional(bool)
+      encryption_settings = optional(object({
+        disk_encryption_key = optional(object({
+          secret_url      = string
+          source_vault_id = optional(string)
+        }))
+        key_encryption_key = optional(object({
+          key_url         = string
+          source_vault_id = optional(string)
+        }))
+      }))
+      attachment = optional(object({
+        virtual_machine_id        = string
+        lun                       = number
+        caching                   = string
+        create_option             = optional(string)
+        write_accelerator_enabled = optional(bool)
+      }))
+    })))
     datasource = optional(object({
       keyvault = optional(map(object({
         keyvault_id = optional(string)
@@ -375,5 +425,29 @@ locals {
         }
       )
     ]
+  ])
+
+  #
+  # Azure Managed Disks
+  #
+  azure_managed_disk = flatten([
+    for disk_id, disk in coalesce(try(var.vm.managed_disk, null), {}) : merge(
+      disk,
+      {
+        resource_index = join("_", [disk_id])
+      }
+    )
+  ])
+
+  azure_virtual_machine_data_disk_attachment = flatten([
+    for disk_id, disk in coalesce(try(var.vm.managed_disk, null), {}) : merge(
+      disk.attachment,
+      {
+        virtual_machine_id = lookup(local.azurerm_virtual_machine, disk.attachment.virtual_machine_id, null) == null ? disk.attachment.virtual_machine_id : local.azurerm_virtual_machine[disk.attachment.virtual_machine_id].id
+        managed_disk_id    = local.azurerm_managed_disk[disk_id].id
+        resource_index     = join("_", [disk_id])
+      }
+    )
+    if disk.attachment != null
   ])
 }
