@@ -8,6 +8,12 @@ resource "azurerm_private_endpoint" "lz" {
     for endpoint in local.azure_private_endpoint : endpoint.resource_index => endpoint
   }
 
+  lifecycle {
+    ignore_changes = [
+      private_dns_zone_group
+    ]
+  }
+
   name                = each.value.name
   resource_group_name = lookup(local.azure_resource_group, each.value.resource_group_name, null) == null ? each.value.resource_group_name : local.azure_resource_group[each.value.resource_group_name].name
   location            = lookup(local.azure_resource_group, each.value.resource_group_name, null) == null ? each.value.location : local.azure_resource_group[each.value.resource_group_name].location
