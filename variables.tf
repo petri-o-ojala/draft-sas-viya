@@ -36,6 +36,12 @@ variable "sas_esp_log_analytics" {
   default     = {}
 }
 
+variable "sas_esp_keyvault" {
+  description = "SAS ESP Keyvault"
+  type        = any
+  default     = {}
+}
+
 #
 # Confluent Cloud
 #
@@ -136,6 +142,12 @@ variable "sas_esp_vm_bastion" {
 
 variable "sas_esp_vm_bastion_identity" {
   description = "SAS ESP Virtual Machine for Bastion identity"
+  type        = any
+  default     = {}
+}
+
+variable "sas_esp_vm_bastion_keyvault" {
+  description = "SAS ESP Virtual Machine for Bastion credentials in Keyvault"
   type        = any
   default     = {}
 }
