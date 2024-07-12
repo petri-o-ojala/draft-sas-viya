@@ -8,6 +8,12 @@ resource "azurerm_private_endpoint" "lz" {
     for endpoint in local.azure_private_endpoint : endpoint.resource_index => endpoint
   }
 
+  lifecycle {
+    ignore_changes = [
+      private_dns_zone_group
+    ]
+  }
+
   name                = each.value.name
   resource_group_name = lookup(local.azure_resource_group, each.value.resource_group_name, null) == null ? each.value.resource_group_name : local.azure_resource_group[each.value.resource_group_name].name
   location            = lookup(local.azure_resource_group, each.value.resource_group_name, null) == null ? each.value.location : local.azure_resource_group[each.value.resource_group_name].location
@@ -25,7 +31,7 @@ resource "azurerm_private_endpoint" "lz" {
     content {
       name = each.value.private_dns_zone_group.name
       private_dns_zone_ids = [
-        for id in each.value.private_dns_zone_group.private_dns_zone_ids : lookup(local.azure_private_dns_zone, id) == null ? id : local.azure_private_dns_zone[id].id
+        for id in each.value.private_dns_zone_group.private_dns_zone_ids : lookup(local.azure_private_dns_zone, id, null) == null ? id : local.azure_private_dns_zone[id].id
       ]
     }
   }
