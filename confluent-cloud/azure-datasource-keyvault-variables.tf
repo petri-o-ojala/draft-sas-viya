@@ -7,7 +7,7 @@ locals {
   # Azure Keyvault secrets
   #
   azure_keyvault_secret = flatten([
-    for keyvault_id, keyvault in coalesce(try(var.vm.datasource.keyvault, null), {}) : [
+    for keyvault_id, keyvault in coalesce(try(var.confluent.datasource.keyvault, null), {}) : [
       for secret in coalesce(keyvault.secret, []) : merge(
         {
           name           = secret
