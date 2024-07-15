@@ -5,6 +5,10 @@
 module "sas_esp_confluent_cloud_kafka" {
   source = "./confluent-cloud"
 
+  reference = {
+    azure_key_vault = module.sas_esp_keyvault.azure_key_vault
+  }
+
   confluent = var.sas_esp_confluent_cloud_kafka
 }
 
