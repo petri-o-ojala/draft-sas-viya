@@ -3,7 +3,7 @@
 # SAS ESP Confluent Cloud Kafka Product Team
 #
 
-sas_esp_confluent_cloud_kafka = {
+Xsas_esp_confluent_cloud_kafka = {
   #
   # Kafka Topic
   #
@@ -58,9 +58,9 @@ Xsas_esp_confluent_cloud_kafka_admin_product_team = {
         }
 
         managed_resource = {
-          id          = "kafka-cluster:sas-esp-standard" # reference to Kafka cluster
-          api_version = "kafka-cluster:sas-esp-standard"
-          kind        = "kafka-cluster:sas-esp-standard"
+          id          = "kafka-cluster:sas-esp-kafka-dev" # reference to Kafka cluster
+          api_version = "kafka-cluster:sas-esp-kafka-dev"
+          kind        = "kafka-cluster:sas-esp-kafka-dev"
 
           environment = {
             id = "sas-esp-dev"

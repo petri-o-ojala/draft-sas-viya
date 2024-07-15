@@ -16,10 +16,10 @@ sas_esp_confluent_cloud_kafka = {
   }
   schema_registry = {
     cluster = {
-      "sas-esp-standard" = {
+      "sas-esp-kafka-dev" = {
         environment = {
-          #id = "sas-esp-dev"
-          id = "env-7q91oo"
+          id = "sas-esp-dev"
+          #id = "env-7q91oo"
         }
       }
     }
@@ -29,29 +29,29 @@ sas_esp_confluent_cloud_kafka = {
   #
   kafka = {
     cluster = {
-      "sas-esp-standard" = {
+      "sas-esp-kafka-dev" = {
         display_name = "sas-esp-kafka-dev"
         availability = "SINGLE_ZONE"
         cloud        = "AZURE"
         region       = "westeurope"
-        standard        = {}
+        basic        = {}
         environment = {
-          #id = "sas-esp-dev"
-          id = "env-7q91oo"
+          id = "sas-esp-dev"
+          #id = "env-7q91oo"
         }
       }
     }
     topic = {
       "sas-esp-topic1" = {
         kafka_cluster = {
-          id = "sas-esp-standard"
+          id = "sas-esp-kafka-dev"
         }
-        topic_name = "sas-esp-topic1"
-        #TODO: rest_endpoint = "kafka_cluster.rest_endpoint"
+        topic_name = "sas-esp-ops-team-topic1"
+        #rest_endpoint = confluent_kafka_cluster.rest_endpoint
         credentials = {
           #TODO: app-manager CLOUD API KEY and SECRET
-          key = "EWPP3RCOC3QHNBBM"
-          secret = "MJXLrRNr7HxSfzOxLKTRTdG5jO5gHzpeJZ4TlutxY+3H/O3eBCSc3X2/mLoWVLIh"
+          key = "Q2O2DF7METRBAMD7"
+          secret = "***************"
         }
       }
     }
@@ -87,7 +87,7 @@ sas_esp_confluent_cloud_kafka_ops_team = {
       "app-manager-kafka-cluster-admin" = {
         principal   = "app-manager" # reference to service_account
         role_name   = "CloudClusterAdmin"
-        crn_pattern = "kafka-cluster:sas-esp-standard" # reference to Kafka cluster
+        crn_pattern = "kafka-cluster:sas-esp-kafka-dev" # reference to Kafka cluster
       }
     }
     #
@@ -105,9 +105,9 @@ sas_esp_confluent_cloud_kafka_ops_team = {
         }
 
         managed_resource = {
-          id          = "kafka-cluster:sas-esp-standard" # reference to Kafka cluster
-          api_version = "kafka-cluster:sas-esp-standard"
-          kind        = "kafka-cluster:sas-esp-standard"
+          id          = "kafka-cluster:sas-esp-kafka-dev" # reference to Kafka cluster
+          api_version = "kafka-cluster:sas-esp-kafka-dev"
+          kind        = "kafka-cluster:sas-esp-kafka-dev"
 
           environment = {
             id = "sas-esp-dev"
