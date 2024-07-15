@@ -103,8 +103,8 @@ resource "confluent_kafka_cluster_config" "lz" {
     for_each = try(each.value.credentials, null) == null ? [] : [1]
 
     content {
-      key    = each.value.credentials.key
-      secret = each.value.credentials.secret
+      key    = each.value.credentials.key == null ? null : lookup(local.azurerm_key_vault_secret, each.value.credentials.key, null) == null ? each.value.credentials.key : data.azurerm_key_vault_secret.lz[each.value.credentials.key].value
+      secret = each.value.credentials.secret == null ? null : lookup(local.azurerm_key_vault_secret, each.value.credentials.secret, null) == null ? each.value.credentials.secret : data.azurerm_key_vault_secret.lz[each.value.credentials.secret].value
     }
   }
 
@@ -136,8 +136,8 @@ resource "confluent_kafka_topic" "lz" {
     for_each = try(each.value.credentials, null) == null ? [] : [1]
 
     content {
-      key    = each.value.credentials.key
-      secret = each.value.credentials.secret
+      key    = each.value.credentials.key == null ? null : lookup(local.azurerm_key_vault_secret, each.value.credentials.key, null) == null ? each.value.credentials.key : data.azurerm_key_vault_secret.lz[each.value.credentials.key].value
+      secret = each.value.credentials.secret == null ? null : lookup(local.azurerm_key_vault_secret, each.value.credentials.secret, null) == null ? each.value.credentials.secret : data.azurerm_key_vault_secret.lz[each.value.credentials.secret].value
     }
   }
 
