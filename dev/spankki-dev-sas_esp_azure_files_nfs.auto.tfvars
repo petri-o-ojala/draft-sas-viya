@@ -33,7 +33,7 @@ sas_esp_azure_files_nfs = {
         ]
       }
       tags = {
-        "application" = "AFC"
+        "application" = "S-Pankki AFC ESP"
         "contact"     = "anssi.yli-leppala@s-pankki.fi"
         "costcenter"  = "3730403"
         "department"  = "S-Pankki"
@@ -56,7 +56,7 @@ sas_esp_azure_files_nfs_private_endpoint = {
       resource_group_name = "rg-networking"
       location            = "westeurope"
       tags = {
-        "application" = "AFC"
+        "application" = "S-Pankki AFC ESP"
         "contact"     = "anssi.yli-leppala@s-pankki.fi"
         "costcenter"  = "3730403"
         "department"  = "S-Pankki"

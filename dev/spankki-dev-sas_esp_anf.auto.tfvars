@@ -14,7 +14,7 @@ sas_esp_anf = {
       resource_group_name = "rg-spankki-afc-esp-we-anf-dev"
       location            = "westeurope"
       tags = {
-        "application" = "AFC"
+        "application" = "S-Pankki AFC ESP"
         "contact"     = "anssi.yli-leppala@s-pankki.fi"
         "costcenter"  = "3730403"
         "department"  = "S-Pankki"
@@ -32,7 +32,7 @@ sas_esp_anf = {
       size_in_tb    = 2
       qos_type      = "Manual"
       tags = {
-        "application" = "AFC"
+        "application" = "S-Pankki AFC ESP"
         "contact"     = "anssi.yli-leppala@s-pankki.fi"
         "costcenter"  = "3730403"
         "department"  = "S-Pankki"
@@ -71,7 +71,7 @@ sas_esp_anf = {
         }
       ]
       tags = {
-        "application" = "AFC"
+        "application" = "S-Pankki AFC ESP"
         "contact"     = "anssi.yli-leppala@s-pankki.fi"
         "costcenter"  = "3730403"
         "department"  = "S-Pankki"

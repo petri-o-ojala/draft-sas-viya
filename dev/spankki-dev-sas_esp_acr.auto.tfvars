@@ -13,7 +13,7 @@ sas_esp_acr_identity = {
       location            = "westeurope"
       resource_group_name = "rg-spankki-afc-esp-we-identity-dev"
       tags = {
-        "application" = "AFC"
+        "application" = "S-Pankki AFC ESP"
         "contact"     = "anssi.yli-leppala@s-pankki.fi"
         "costcenter"  = "3730403"
         "department"  = "S-Pankki"
@@ -55,7 +55,7 @@ sas_esp_acr = {
         ]
       }
       tags = {
-        "application" = "AFC"
+        "application" = "S-Pankki AFC ESP"
         "contact"     = "anssi.yli-leppala@s-pankki.fi"
         "costcenter"  = "3730403"
         "department"  = "S-Pankki"

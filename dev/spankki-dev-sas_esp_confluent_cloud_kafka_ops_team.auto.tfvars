@@ -4,6 +4,18 @@
 
 /*
 sas_esp_confluent_cloud_kafka = {
+#
+# Azure Keyvault credentials
+#
+  datasource = {
+    keyvault = {
+      "sas-subscription" = {
+        secret = [
+          "confluent-cloud-afc-esp-tietoevry-developers"
+        ]
+      }
+    }
+  }
   #
   # Confluent Cloud environment
   #
@@ -37,6 +49,20 @@ sas_esp_confluent_cloud_kafka = {
         basic        = {}
         environment = {
           id = "sas-esp-dev"
+        }
+      }
+    }
+    topic = {
+      "sas-esp-topic1" = {
+        kafka_cluster = {
+          id = "sas-esp-kafka-dev"
+        }
+        topic_name = "sas-esp-ops-team-topic1"
+        #est_endpoint = "sas-esp-kafka-dev"
+        credentials = {
+          #TODO: app-manager CLOUD API KEY and SECRET
+          key = "Q2O2DF7METRBAMD7"
+          secret = "sas-subscription:confluent-cloud-afc-esp-tietoevry-developers"
         }
       }
     }

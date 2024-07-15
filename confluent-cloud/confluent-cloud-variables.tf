@@ -6,6 +6,15 @@ variable "confluent" {
   description = "Confluent Cloud"
   type = object({
     #
+    # References to Azure Keyvault
+    #
+    datasource = optional(object({
+      keyvault = optional(map(object({
+        keyvault_id = optional(string)
+        secret      = optional(list(string))
+      })))
+    }))
+    #
     # Confluent Cloud Schema Registry
     #
     schema_registry = optional(object({
