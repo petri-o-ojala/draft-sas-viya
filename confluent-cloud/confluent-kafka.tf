@@ -128,7 +128,7 @@ resource "confluent_kafka_topic" "lz" {
   }
 
   topic_name       = each.value.topic_name
-  rest_endpoint    = each.value.rest_endpoint
+  rest_endpoint    = lookup(local.confluent_kafka_cluster, each.value.rest_endpoint, null) == null ? each.value.rest_endpoint : local.confluent_kafka_cluster[each.value.rest_endpoint].rest_endpoint
   partitions_count = each.value.partitions_count
   config           = each.value.config
 
