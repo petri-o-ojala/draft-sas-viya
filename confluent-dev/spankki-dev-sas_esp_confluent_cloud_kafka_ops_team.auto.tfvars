@@ -3,6 +3,19 @@
 #
 
 sas_esp_confluent_cloud_kafka = {
+#
+# Azure Keyvault credentials
+#
+  datasource = {
+    keyvault = {
+      "sas-subscription" = {
+        secret = [
+          "kafka-app-manager-kafka-api-key",
+          "kafka-app-manager-kafka-api-secret"
+        ]
+      }
+    }
+  }
   #
   # Confluent Cloud environment
   #
@@ -37,7 +50,6 @@ sas_esp_confluent_cloud_kafka = {
         basic        = {}
         environment = {
           id = "sas-esp-dev"
-          #id = "env-7q91oo"
         }
       }
     }
@@ -47,11 +59,10 @@ sas_esp_confluent_cloud_kafka = {
           id = "sas-esp-kafka-dev"
         }
         topic_name = "sas-esp-ops-team-topic1"
-        #rest_endpoint = confluent_kafka_cluster.rest_endpoint
+        rest_endpoint = "sas-esp-kafka-dev"
         credentials = {
-          #TODO: app-manager CLOUD API KEY and SECRET
-          key = "Q2O2DF7METRBAMD7"
-          secret = "***************"
+          key = "sas-subscription:kafka-app-manager-kafka-api-key"
+          secret = "sas-subscription:kafka-app-manager-kafka-api-secret"
         }
       }
     }
