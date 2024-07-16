@@ -64,6 +64,12 @@ variable "sas_esp_confluent_cloud_kafka_admin_product_team" {
   default     = {}
 }
 
+variable "sas_esp_confluent_keyvault" {
+  description = "SAS ESP Confluent credentials in Keyvault"
+  type        = any
+  default     = {}
+}
+
 #
 # Azure Networking
 #
